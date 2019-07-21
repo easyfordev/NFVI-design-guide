@@ -1,23 +1,22 @@
 <template>
-    <div class="t-section-basic-info">
+    <div class="t-input-section1">
         <p>시스템 정보 입력</p>
     </div>
 </template>
 
 <script>
 export default {
-    name: "TSectionBasicInfo"
+    name: "TInputSection1"
 }
 </script>
 
 <style scoped>
-.t-section-basic-info{
+.t-input-section1{
     position: absolute;
     background-color: black;
-    margin-top: 3%;
-    margin-left: 5%;
+    margin-top: 1%;
     height: 20%;
-    width: 90%;
+    width: 100%;
 }
 p {
     color: white;

@@ -1,7 +1,7 @@
 <template>
     <div class="t-nfvi-header">
         <img src="../../assets/skt5gx.png" style="position: absolute; width: 100px; height: 23px; margin-top: 10px; margin-left: 10px">
-        <img src="../../assets/logo-text.png" style="position: absolute; width: 120px; height: 28px; margin-top: 10px; margin-left: 115px">
+        <img src="../../assets/NFVIlogo.png" style="position: absolute; width: 110px; height: 30px; margin-top: 10px; margin-left: 110px">
     </div>
 </template>
 

@@ -1,0 +1,40 @@
+{
+  "data": [
+    {
+      "id": 1,
+      "partnum": "815097-B21",
+      "volume": 8,
+      "name": "",
+      "price": 185000,
+      "speed": 2666,
+      "vendor": "HPE"
+    },
+    {
+      "id": 2,
+      "partnum": "815098-B21",
+      "volume": 16,
+      "name": null,
+      "price": 219000,
+      "speed": 2666,
+      "vendor": "HPE"
+    },
+    {
+      "id": 3,
+      "partnum": "815100-B21",
+      "volume": 32,
+      "name": null,
+      "price": 414000,
+      "speed": 2666,
+      "vendor": "HPE"
+    },
+    {
+      "id": 4,
+      "partnum": "815101-B21",
+      "volume": 64,
+      "name": null,
+      "price": 1218000,
+      "speed": 2666,
+      "vendor": "HPE"
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "data": [
+    {
+      "id": 1,
+      "partnum": "826878-B21",
+      "name": "6140 Xeon Gold Kit",
+      "processnum": "6140",
+      "core": 18,
+      "clock": 2.3,
+      "price": 2481000,
+      "TPMc": 4727908,
+      "vendor": "hpe",
+      "numOfSlot": 12
+    },
+    {
+      "id": 2,
+      "partnum": "826882-B21",
+      "name": "6148 Xeon Gold Kit",
+      "processnum": "6148",
+      "core": 20,
+      "clock": 2.4,
+      "price": 3114000,
+      "TPMc": 52000698,
+      "vendor": "hpe",
+      "numOfSlot": 12
+    },
+    {
+      "id": 3,
+      "partnum": "826886-B21",
+      "name": "6152 Xeon Gold Kit",
+      "processnum": "6152",
+      "core": 22,
+      "clock": 2.1,
+      "price": 3734000,
+      "TPMc": 5305763,
+      "vendor": "hpe",
+      "numOfSlot": 12
+    }
+  ]
+}

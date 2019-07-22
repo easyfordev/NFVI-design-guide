@@ -3,7 +3,7 @@
         <t-input-section1></t-input-section1>
         <t-input-section2></t-input-section2>
         <button id="clear-btn"><span>Clear</span></button>
-        <button id="done-btn"><router-link to="/result"><span>Done</span></router-link></button>
+        <button id="done-btn" @click="isClicked"><span>Done</span></button>
     </div>
 </template>
 
@@ -13,7 +13,12 @@ import TInputSection2 from "./TInputSection2"
 
 export default {
     name: "TInputMain",
-    components: { TInputSection1, TInputSection2 }
+    components: { TInputSection1, TInputSection2 },
+    methods: {
+        isClicked(){
+            this.$router.push({name: 'TResultMain'})
+        }
+    }
 }
 </script>
 
@@ -25,7 +30,7 @@ export default {
     height: 95%;
     left: 10%;
     /*background-color: black;*/
-    border: 1px solid black;
+    /*border: 1px solid black;*/
 }
 #clear-btn {
     position:absolute;
@@ -50,7 +55,6 @@ export default {
     letter-spacing: normal;
     color: #ffffff;
 }
-
 #done-btn {
     position:absolute;
     bottom: 2%;
@@ -61,7 +65,6 @@ export default {
     box-shadow: 0 2px 4px 0 #c6d5e9;
     background-color: #FF7A00;
 }
-
 #done-btn span {
     width: 49.5px;
     height: 17px;

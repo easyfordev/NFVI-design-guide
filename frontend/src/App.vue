@@ -18,4 +18,9 @@ export default {
 </script>
 
 <style>
+    @import url('https://fonts.googleapis.com/css?family=Nanum+Gothic+Coding&display=swap');
+#app {
+    /*font-family: 'Nanum Gothic Coding', monospace;*/
+}
+
 </style>

@@ -1,13 +1,17 @@
 <template>
     <div class="t-result-main">
-        This is main result page
+        <t-result-section1></t-result-section1>
+        <t-result-section2></t-result-section2>
     </div>
 </template>
 
 <script>
-export default {
+    import TResultSection1 from './TResultSection1'
+    import TResultSection2 from './TResultSection2'
+
+    export default {
     name: "TResultMain",
-    components: { }
+    components: { TResultSection1, TResultSection2 }
 }
 </script>
 
@@ -15,10 +19,8 @@ export default {
 .t-result-main {
     position: absolute;
     top: 5%;
-    width:80%;
+    width:100%;
     height: 95%;
-    left: 10%;
     /*background-color: black;*/
-    border: 1px solid black;
 }
 </style>

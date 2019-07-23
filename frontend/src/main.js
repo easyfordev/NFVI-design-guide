@@ -9,6 +9,7 @@ Vue.config.productionTip = false;
 Vue.prototype.$http = axios;
 
 Vue.use(VueGoodTablePlugin);
+
 new Vue({
   render: h => h(App),
   router

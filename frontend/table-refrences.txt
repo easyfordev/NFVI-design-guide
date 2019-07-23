@@ -1,0 +1,2 @@
+# Custom fields by v-if (Syntax is a little bit changed now!)
+https://vuejsexamples.com/a-simple-clean-data-table-for-vuejs2-with-essential-features-like-sorting/

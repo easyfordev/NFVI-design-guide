@@ -2,8 +2,6 @@
   <div id="app">
       <t-nfvi-header></t-nfvi-header>
       <router-view></router-view>
-      <!--<t-section></t-section>-->
-<!--    <HelloWorld msg="Welcome to Your Vue.js App"/>-->
   </div>
 </template>
 

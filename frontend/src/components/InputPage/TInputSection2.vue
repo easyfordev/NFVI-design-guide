@@ -41,22 +41,23 @@
             </div>
 
             <div class="spec-contents" v-else-if="specData.title === 'Memory'">
-
+                <label style="font-size: 14px; font-weight: bold; padding-left: 10px">
+                    목표 용량
+                    <select>
+                        <option>384GB</option>
+                    </select>
+                </label>
                 <table>
                     <th v-for="hitem in specData.tableHeaders" :key="hitem.key">{{ hitem }}</th>
                     <tr v-for="item in specData.tableItems" :key="item.key">
-                        <td>{{item}}</td>
-                        <!--                        <td style="width: 2%"><input type="checkbox" @click="serverSelected(item.processnum)"></td>-->
-                        <!--                        <td style="width: 35%;height: 10%">{{item.name}}</td>-->
-                        <!--                        <td style="width: 10%;text-align: center">{{item.clock}}GHz</td>-->
-                        <!--                        <td style="width: 10%;text-align: center">{{item.core}}core</td>-->
-                        <!--                        &lt;!&ndash;                        가격 일단 지우기&ndash;&gt;-->
-                        <!--                        &lt;!&ndash;                        <td style="width: 10%;text-align: center">{{ commafy(item.price)}}원</td>&ndash;&gt;-->
-                        <!--                        <td style="width: 10%;text-align: center">{{ commafy(1234000)}}원</td>-->
-                        <!--                        <td style="width: 10%; font-size: 12px;text-align: center">{{item.NEBS}}</td>-->
-                        <!--                        <td style="width: 10%; font-weight: bold;color: #EA002C;text-align: center">{{commafy(item.TPMc)}}</td>-->
-                        <!--                        <td style="width: 10%; font-weight: bold;color: #EA002C;text-align: center">{{(item.TPMc/item.price).toPrecision(3)}}점</td>-->
-                        <!--                        <td style="width: 10%; font-weight: bold;color: forestgreen;text-align: center" >{{isMaxValue((item.TPMc/item.price).toPrecision(3))}}</td>-->
+<!--                        <td>{{item}}</td>-->
+                        <td></td>
+                        <td>{{item.speed}}</td>
+                        <td>{{item.volume}}</td>
+                        <td>{{item.price}}</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                     </tr>
                 </table>
             </div>

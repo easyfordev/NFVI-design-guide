@@ -20,11 +20,23 @@
                         enabled: true,
                         mode: 'records'
                      }"
+                    @on-cell-click="onCellClick"
                     style="padding-top: 1%"
             >
                 <div slot="table-actions">
                     <button id="add-data">+ 데이터 추가</button>
                 </div>
+                <template slot="table-row" slot-scope="props">
+                    <span v-if="props.column.field == 'edit'">
+                        <button style="background-color: lightblue">수정</button>
+                        <!--<span style="font-weight: bold; color: blue;">{{props.row.age}}</span>-->
+                    </span>
+                    <span v-if="props.column.field == 'delete'">
+                        <button style="background-color: lightcoral">삭제</button>
+                        <!--<span style="font-weight: bold; color: blue;">{{props.row.age}}</span>-->
+                    </span>
+                    <span v-else>{{props.formattedRow[props.column.field]}}</span>
+                </template>
             </vue-good-table>
         </div>
     </div>
@@ -68,9 +80,6 @@ export default {
             let url = 'http://localhost:3000/v2/' + val.toString();
             this.$http.get(url)
                 .then(response => {
-                    // {name: "John", age: 20, createdAt: '201-10-31:9: 35 am', score: 0.03343},
-                    // {name: "Jane", age: 24, createdAt: '2011-10-31', score: 0.03343}
-                    // let dataArray = response.data.data;
                     let keys = Object.keys(response.data.data[0]);
 
                     let colArray = [];
@@ -80,10 +89,28 @@ export default {
                         json['field'] = keys[i];
                         colArray.push(json);
                     }
+                    colArray.push({'label': '', 'field':'edit'});
+                    colArray.push({'label': '', 'field':'delete'});
+
                     this.columns = colArray;
 
                     this.rows = response.data.data;
+                })
+                .catch(response => { // TODO : 예외일 떄 처리하기 (Promise, axios 문법)
+                    console.log(response.status)
                 });
+        },
+        onCellClick(params) {
+            if(params.column.field === 'edit'){
+                console.log('THis is edit ')
+            } else if(params.column.field === 'delete'){
+                console.log('THis is delete ')
+
+            }
+            // params.row - row object
+            // params.column - column object
+            // params.rowIndex - index of this row on the current page.
+            // params.event - click event
         }
     }
 }

@@ -4,8 +4,7 @@
         <img src="../../assets/NFVIlogo.png" style="position: absolute; width: 110px; height: 30px; margin-top: 10px; margin-left: 110px">
 
         <div id="menu-last" @click="goToAdmin">
-            <span class="menu-item">관리자 모드</span>
-            <img src="../../assets/settings.png" style="position: absolute; right: 10px; top: 15%; height: 30px; width: 30px">
+            <img src="../../assets/admin-normal.png" style="width: 95%; height: 75%; position: absolute; top: 20%">
         </div>
     </div>
 </template>
@@ -41,7 +40,7 @@ export default {
 #menu-last {
     position: absolute;
     right: 0;
-    width: 8%;
+    width: 7%;
     height: 100%;
     /*background-color: lightcoral;*/
 }

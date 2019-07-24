@@ -3,10 +3,10 @@
         <p id="big-title" @click="goToHome">시스템 가상화 인프라 디자인</p>
         <p class="mid-title">{{ pageTitle }}</p>
         <div style="padding-left: 3%" >
-            <!--<img src="../../assets/rack1.png" :style="myStyle" @mouseenter="onMouseEnter" @mouseleave="onMouseLeave" @click="onRackClicked">-->
-            <!--<img src="../../assets/rack2.png" style="height: 755px; width: 200px; position: absolute; top:13%; left: 24%; border: 10px solid transparent">-->
-            <!--<img src="../../assets/rack1.png" style="position: absolute; top: 12%; left: 50%;border: 10px solid transparent">-->
-            <!--<img src="../../assets/rack2.png" style="height: 755px; width: 200px; position: absolute; top:13%; left: 73%;border: 10px solid transparent">-->
+            <img src="../../assets/rack1.png" :style="myStyle" @mouseenter="onMouseEnter" @mouseleave="onMouseLeave" @click="onRackClicked">
+            <img src="../../assets/rack2.png" style="height: 755px; width: 200px; position: absolute; top:13%; left: 28%; border: 10px solid transparent">
+<!--            <img src="../../assets/rack1.png" style="position: absolute; top: 12%; left: 50%;border: 10px solid transparent">-->
+<!--            <img src="../../assets/rack2.png" style="height: 755px; width: 200px; position: absolute; top:13%; left: 73%;border: 10px solid transparent">-->
         </div>
 
     </div>

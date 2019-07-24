@@ -16,8 +16,15 @@
             <vue-good-table
                     :columns="columns"
                     :rows="rows"
+                    :pagination-options="{
+                        enabled: true,
+                        mode: 'records'
+                     }"
                     style="padding-top: 1%"
             >
+                <div slot="table-actions">
+                    <button id="add-data">+ 데이터 추가</button>
+                </div>
             </vue-good-table>
         </div>
     </div>
@@ -32,23 +39,53 @@ export default {
         return {
             options: ['CPU','Server','Memory','NIC','DISK','Switch'],
             selectedType: 'CPU',
-            columns: [
-                { label: 'Name', field: 'name'},
-                { label: 'Age', field: 'age', type: 'number'},
-                { label: 'Created On', field: 'createdAt', type: 'date', dateInputFormat: 'YYYY-MM-DD', dateOutputFormat: 'MMM Do YY' },
-                { label: 'Percent', field: 'score', type: 'percentage'}
-            ],
+            columns: [ ],
             rows: [
-                {id: 1, name: "John", age: 20, createdAt: '201-10-31:9: 35 am', score: 0.03343},
-                {id: 2, name: "Jane", age: 24, createdAt: '2011-10-31', score: 0.03343},
-                {id: 3, name: "Susan", age: 16, createdAt: '2011-10-30', score: 0.03343},
-                {id: 4, name: "Chris", age: 55, createdAt: '2011-10-11', score: 0.03343},
-                {id: 5, name: "Dan", age: 40, createdAt: '2011-10-21', score: 0.03343},
-                {id: 6, name: "John", age: 20, createdAt: '2011-10-31', score: 0.03343},
+                // {name: "John", age: 20, createdAt: '201-10-31:9: 35 am', score: 0.03343},
+                // {name: "Jane", age: 24, createdAt: '2011-10-31', score: 0.03343}
+                // {id: 1, name: "John", age: 20, createdAt: '201-10-31:9: 35 am', score: 0.03343},
+                // {id: 2, name: "Jane", age: 24, createdAt: '2011-10-31', score: 0.03343},
+                // {id: 3, name: "Susan", age: 16, createdAt: '2011-10-30', score: 0.03343},
+                // {id: 4, name: "Chris", age: 55, createdAt: '2011-10-11', score: 0.03343},
+                // {id: 5, name: "Dan", age: 40, createdAt: '2011-10-21', score: 0.03343},
+                // {id: 6, name: "John", age: 20, createdAt: '2011-10-31', score: 0.03343},
             ]
         };
     },
-    components: { VueGoodTable }
+    components: { VueGoodTable },
+    watch: {
+        selectedType: function () {
+            this.onTypeSelected(this.selectedType)
+            // this.fullName = val + ' ' + this.lastName
+        }
+    },
+    created: function() {
+        // this.getCPUData();
+        this.onTypeSelected(this.selectedType)
+    },
+    methods: {
+        onTypeSelected(val){
+            let url = 'http://localhost:3000/v2/' + val.toString();
+            this.$http.get(url)
+                .then(response => {
+                    // {name: "John", age: 20, createdAt: '201-10-31:9: 35 am', score: 0.03343},
+                    // {name: "Jane", age: 24, createdAt: '2011-10-31', score: 0.03343}
+                    // let dataArray = response.data.data;
+                    let keys = Object.keys(response.data.data[0]);
+
+                    let colArray = [];
+                    for (let i=0;i<keys.length ; i++){
+                        let json = {};
+                        json['label'] = keys[i];
+                        json['field'] = keys[i];
+                        colArray.push(json);
+                    }
+                    this.columns = colArray;
+
+                    this.rows = response.data.data;
+                });
+        }
+    }
 }
 </script>
 
@@ -89,5 +126,16 @@ export default {
     background-color: #f4f6f6;
     margin-left: 1%;
     margin-top: 2%;
+}
+#add-data{
+    width: 120px;
+    height: 43px;
+    border-radius: 20px;
+    box-shadow: 0 2px 4px 0 #c6d5e9;
+    background-color: #1c1f28;
+
+    font-size: 14px;
+    font-weight: bold;
+    color: #ffffff;
 }
 </style>

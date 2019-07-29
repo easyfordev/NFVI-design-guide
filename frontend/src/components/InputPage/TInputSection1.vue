@@ -2,10 +2,24 @@
     <div class="t-input-section1">
         <p>시스템 정보</p>
         <div class="user-form">
+            <!--<label>-->
+                <!--Service Name-->
+                <!--<input type="text" id="name">-->
+            <!--</label>-->
             <label>
-                Service Name
-                <input type="text" id="name">
+                Workload 선택
+                <select style="margin-right: 10px" class="type-dropdown">
+                    <option>Signaling</option>
+                    <option>User Plain</option>
+                    <option>ETC</option>
+                </select>
+                <select class="type-dropdown">
+                    <option></option>
+                    <option>CMS</option>
+                    <option>+ 새로운 Workload 추가하기</option>
+                </select>
             </label>
+
         </div>
     </div>
 </template>
@@ -19,7 +33,7 @@ export default {
 <style scoped>
 .t-input-section1{
     position: absolute;
-    margin-top: 1%;
+    margin-top: 0%;
     height: 10%;
     width: 100%;
 }
@@ -28,7 +42,7 @@ export default {
     /*height: 75%;*/
     margin-left: 2%;
     margin-right: 2%;
-    padding: 10px;
+    padding: 5px;
 }
 p {
     /*color: white;*/
@@ -41,5 +55,12 @@ label {
     font-weight: 600;
     font-size: 15px;
     color: #555555;
+}
+.type-dropdown{
+    /*width: 200px;*/
+    height: 25px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px 0 #a6b7cd;
+    background-color: #ffffff;
 }
 </style>

@@ -26,16 +26,17 @@
                     <th v-for="hitem in specData.tableHeaders" :key="hitem.key">{{ hitem }}</th>
                     <tr v-for="item in specData.tableItems" :key="item.key">
                         <td style="width: 2%"><input type="checkbox" @click="cpuSelected(item.processnum)"></td>
-                        <td style="width: 35%;height: 10%">{{item.name}}</td>
-                        <td style="width: 10%;text-align: center">{{item.clock}}GHz</td>
+                        <td style="width: 30%;height: 10%">{{item.name}}</td>
+                        <td style="width: 15%;text-align: center">{{item.clock}}GHz</td>
                         <td style="width: 10%;text-align: center">{{item.core}}core</td>
-                        <!--                        가격 일단 지우기-->
-                        <!--                        <td style="width: 10%;text-align: center">{{ commafy(item.price)}}원</td>-->
-                        <td style="width: 10%;text-align: center">{{ commafy(1234000)}}원</td>
-                        <td style="width: 10%; font-size: 12px;text-align: center">{{item.NEBS}}</td>
+                                                <!--가격 일단 지우기-->
+                                                <td style="width: 13%;text-align: center">{{ commafy(item.price)}}원</td>
+                        <!--<td style="width: 10%;text-align: center">{{ commafy(1234000)}}원</td>-->
+                        <td style="width: 7%; font-size: 12px;text-align: center">{{item.NEBS}}</td>
                         <td style="width: 10%; font-weight: bold;color: #EA002C;text-align: center">{{commafy(item.TPMc)}}</td>
                         <td style="width: 10%; font-weight: bold;color: #EA002C;text-align: center">{{(item.TPMc/item.price).toPrecision(3)}}점</td>
-                        <td style="width: 10%; font-weight: bold;color: forestgreen;text-align: center" >{{isMaxValue((item.TPMc/item.price).toPrecision(3))}}</td>
+                        <td style="width: 8%; font-weight: bold;color: forestgreen;text-align: center" >{{isMaxValue((item.TPMc/item.price).toPrecision(3))}}</td>
+                        <td style="width: 10%; text-align: center" ><input type="number" style="width: 35px"></td>
                     </tr>
                 </table>
             </div>
@@ -43,7 +44,7 @@
             <div class="spec-contents" v-else-if="specData.title === 'Memory'">
                 <label style="font-size: 14px; font-weight: bold; padding-left: 10px">
                     목표 용량
-                    <select>
+                    <select class="type-dropdown">
                         <option>384GB</option>
                     </select>
                 </label>
@@ -51,13 +52,16 @@
                     <th v-for="hitem in specData.tableHeaders" :key="hitem.key">{{ hitem }}</th>
                     <tr v-for="item in specData.tableItems" :key="item.key">
 <!--                        <td>{{item}}</td>-->
-                        <td></td>
+                        <td style="width: 2%"><input type="checkbox" @click="cpuSelected(item.processnum)"></td>
+                        <td style="width: 28%">{{item.name}}</td>
                         <td>{{item.speed}}</td>
                         <td>{{item.volume}}</td>
-                        <td>{{item.price}}</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td style="width: 12%;">{{commafy(item.price)}}원</td>
+                        <td style="width: 8%;">{{item.pcs}}개</td>
+                        <td style="font-weight: bold;color: #EA002C;text-align: center">{{item.score}}점</td>
+                        <td style="width: 12%;font-weight: bold;color: #EA002C;text-align: center">{{commafy(item.price * item.pcs)}}원</td>
+                        <td><span v-if="item.volume == 32" style="width: 8%; font-weight: bold;color: forestgreen;text-align: center">BEST!</span></td>
+                        <td><input type="number" style="width: 25px;"/></td>
                     </tr>
                 </table>
             </div>
@@ -70,7 +74,48 @@
                         <td style="width: 10%;height: 10%">{{item.vendor}}</td>
                         <td style="width: 35%;height: 10%">{{item.name}}</td>
                         <td style="width: 10%;height: 10%">{{item.size}}U</td>
-                        <td style="width: 10%;height: 10%">{{item.numOfCpu}}U</td>
+                        <td style="width: 10%;height: 10%">{{item.numOfCpu}}개</td>
+                        <td style="width: 10%;height: 10%"><input type="number" style="width: 50px; text-align: center"/></td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="spec-contents" v-else-if="specData.title === 'DISK'">
+                <p style="font-size: 15px; text-align: center">기본값을 사용합니다</p>
+                <label style="font-size: 14px; font-weight: bold; padding-left: 10px"> DISK 선택
+                    <select class="type-dropdown">
+                        <option>HPE 1.2TB SAS 10K SFF SC DS HDD</option>
+                    </select>
+                </label>
+                <br>
+                <br>
+                <label style="font-size: 14px; font-weight: bold; padding-left: 10px">수량 <input type="number" value="12"></label>
+            </div>
+            <div class="spec-contents" v-else-if="specData.title === 'NIC'">
+                <p style="font-size: 15px; text-align: center">기본값을 사용합니다</p>
+                <table>
+                    <th></th>
+                    <th>용량</th>
+                    <th>타입</th>
+                    <th>부품 정보</th>
+                    <th>가격</th>
+                    <th>수량</th>
+
+                    <tr>
+                        <td><input type="checkbox"/></td>
+                        <td style="width: 10%">NIC_10G</td>
+                        <td style="width: 10%">UTP(FLR)</td>
+                        <td style="width: 40%">HPE Eth 10Gb 2p 562FLR-T Adptr</td>
+                        <td>313,000원</td>
+                        <td><input type="number" style="width: 30px"></td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox"/></td>
+                        <td style="width: 10%">NIC_10G</td>
+                        <td style="width: 10%">UTP</td>
+                        <td style="width: 40%">HPE Eth 10Gb 2p 562T Adptr</td>
+                        <td>333,000원</td>
+                        <td><input type="number" style="width: 30px" value="1"></td>
                     </tr>
                 </table>
             </div>
@@ -115,23 +160,23 @@ export default {
             }
         },
         getCPUData: function() {
-            this.$http.get('http://localhost:3000/v1/cpu')
+            this.$http.get('http://localhost:3000/v2/cpu')
                 .then(response => {
-                    this.specData.tableHeaders = ['','부품 정보','Clock속도', 'Core수', '가격', 'NEBS Lv3', '성능 점수', '가성비 점수', '추천'];
+                    this.specData.tableHeaders = ['','부품 정보','Clock속도', 'Core수', '가격', 'NEBS Lv3', '성능 점수', '가성비 점수', '추천', '수량'];
                     this.specData.tableItems = response.data.data;
                 });
         },
         getMemoryData: function() {
-            this.$http.get('http://localhost:3000/v1/memory')
+            this.$http.get('http://localhost:3000/v2/memory')
                 .then(response => {
-                    this.specData.tableHeaders = ['부품 정보', '속도', '개당 용량', '가격', '갯수','성능 점수', '추천'];
+                    this.specData.tableHeaders = ['','부품 정보', '속도', '개당 용량', '가격', '갯수','성능 점수', '총 가격', '추천', '수량'];
                     this.specData.tableItems = response.data.data;
                 });
         },
         getServerData: function() {
-            this.$http.get('http://localhost:3000/v1/server')
+            this.$http.get('http://localhost:3000/v2/server')
                 .then(response => {
-                    this.specData.tableHeaders = ['','벤더','부품 정보','RU','CPU 수'];
+                    this.specData.tableHeaders = ['','벤더','부품 정보','RU','CPU 개수', '수량'];
                     this.specData.tableItems = response.data.data;
                 });
         },
@@ -296,7 +341,7 @@ table th {
     border-top:1px solid #fafafa;
     border-bottom:1px solid #e0e0e0;
     background: #f4f6f6;
-    font-size: 14px;
+    font-size: 15px;
 }
 table tr {
     /*text-align: center;*/
@@ -312,6 +357,15 @@ table td {
 }
 .items.active {
     background-color: lightgreen;
+}
+.type-dropdown{
+    /*width: 200px;*/
+    height: 25px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px 0 #a6b7cd;
+    background-color: #ffffff;
+    margin-left: 2%;
+    margin-right: 2%;
 }
 </style>
 

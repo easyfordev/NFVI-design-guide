@@ -4,7 +4,7 @@
         <p class="mid-title">{{ pageTitle }}</p>
         <div style="padding-left: 3%" >
             <img src="../../assets/rack1.png" :style="myStyle" @mouseenter="onMouseEnter" @mouseleave="onMouseLeave" @click="onRackClicked">
-            <img src="../../assets/rack2.png" style="height: 755px; width: 200px; position: absolute; top:13%; left: 28%; border: 10px solid transparent">
+            <img src="../../assets/rack2.png" style="height: 650px; width: 200px; position: absolute; top:13%; left: 35%; border: 10px solid transparent">
 <!--            <img src="../../assets/rack1.png" style="position: absolute; top: 12%; left: 50%;border: 10px solid transparent">-->
 <!--            <img src="../../assets/rack2.png" style="height: 755px; width: 200px; position: absolute; top:13%; left: 73%;border: 10px solid transparent">-->
         </div>
@@ -18,7 +18,7 @@ export default {
     data: function() {
         return {
             pageTitle: '',
-            myStyle: 'position: absolute; top: 12%;border: 10px solid transparent'
+            myStyle: 'position: absolute; top: 12%; height: 700px; border: 10px solid transparent'
         }
     },
     created: function() {
@@ -27,13 +27,13 @@ export default {
     methods: {
         onMouseEnter() {
             // alert("HI")
-            this.myStyle = 'position: absolute; top: 12%; border: 10px solid lightcoral';
+            this.myStyle = 'position: absolute; top: 12%; height: 700px; border: 10px solid lightcoral';
         },
         onMouseLeave() {
-            this.myStyle = 'position: absolute; top: 12%; border: 10px solid transparent';
+            this.myStyle = 'position: absolute; top: 12%; height: 700px; border: 10px solid transparent';
         },
         onRackClicked() {
-            this.myStyle = 'position: absolute; top: 12%; border: 10px solid lightcoral';
+            this.myStyle = 'position: absolute; top: 12%; height: 700px; border: 10px solid lightcoral';
             this.$router.push({
                 name: 'TResultSection2'
             })

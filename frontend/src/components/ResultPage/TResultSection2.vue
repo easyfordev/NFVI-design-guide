@@ -5,21 +5,39 @@
             <vue-good-table
                     :columns="columns"
                     :rows="rows"
-                    max-height="250px"
+                    max-height="340px"
                     :fixed-header="true"
+                    :line-numbers="true"
+                    :groupOptions="{ enabled: true }"
             >
-                <template slot="table-row" slot-scope="props">
-                    <span v-if="props.column.field == 'age'">
-                        <span style="font-weight: bold; color: blue;font-size: 10px">{{props.row.age}}</span>
+                <div slot="table-actions-bottom">
+                    <p style="text-align: right; padding-right: 20px; font-weight: bolder">총 29,860,000 원</p>
+                </div>
+                <template slot="table-header-row" slot-scope="props">
+                    <span style="font-weight: bold; color: darkred;font-size: 13px">
+                        {{ props.row.label }}
                     </span>
-                    <span v-else>
+                </template>
+                <template slot="table-row" slot-scope="props">
+                    <span v-if="props.column.field == 'price'">
+                        <span style="font-weight: bold; color: darkred;font-size: 13px">{{props.row.price}}</span>
+                    </span>
+                    <span v-else style="font-weight: bold; color: black;font-size: 12px">
                         {{props.formattedRow[props.column.field]}}
+                    </span>
+                </template>
+                <template slot="table-column" slot-scope="props">
+                    <span v-if="props.column.label =='Name'" style="font-weight: bold; color: black;font-size: 12px">
+                        {{props.column.label}}
+                    </span>
+                    <span v-else style="font-weight: bold; color: black;font-size: 12px">
+                        {{props.column.label}}
                     </span>
                 </template>
             </vue-good-table>
         </div>
 
-        <p class="mid-title" style="position: absolute; top: 45%;width: 100%;height: 5%">전력 소모량 계산기</p>
+        <p class="mid-title" style="position: absolute; top: 55%;width: 100%;height: 5%">전력 소모량 계산기</p>
         <div class="power-estimation">
         </div>
     </div>
@@ -35,35 +53,42 @@ import { VueGoodTable } from 'vue-good-table'
             return {
                 columns: [
                     {
-                        label: 'Name',
+                        label: '구분',
                         field: 'name',
                     },
                     {
-                        label: 'Age',
-                        field: 'age',
-                        type: 'number',
+                        label: '부품 상세 Spec.',
+                        field: 'spec',
                     },
                     {
-                        label: 'Created On',
-                        field: 'createdAt',
-                        type: 'date',
-                        dateInputFormat: 'YYYY-MM-DD',
-                        dateOutputFormat: 'MMM Do YY',
+                        label: '단가',
+                        field: 'perCost'
                     },
                     {
-                        label: 'Percent',
-                        field: 'score',
-                        type: 'percentage',
+                        label: '수량',
+                        field: 'count'
                     },
+                    {
+                        label: '가격',
+                        field: 'price'
+                    }
                 ],
                 rows: [
-                    {id: 1, name: "John", age: 20, createdAt: '201-10-31:9: 35 am', score: 0.03343},
-                    {id: 2, name: "Jane", age: 24, createdAt: '2011-10-31', score: 0.03343},
-                    {id: 3, name: "Susan", age: 16, createdAt: '2011-10-30', score: 0.03343},
-                    {id: 4, name: "Chris", age: 55, createdAt: '2011-10-11', score: 0.03343},
-                    {id: 5, name: "Dan", age: 40, createdAt: '2011-10-21', score: 0.03343},
-                    {id: 6, name: "John", age: 20, createdAt: '2011-10-31', score: 0.03343},
-                ],
+                    {
+                        mode: "span", // span means this header will span all columns
+                        label: "서버", // this is the label that'll be used for the header
+                        html: false, // if this is true, label will be rendered as html
+                        children: [
+                            { name: "Server", spec: "HPE DL360 Gen10", count: 2, perCost: "1,292,000원", price: "2,584,000원" },
+                            { name: "CPU", spec: "HPE DL360 Gen10 Xeon-G 6140", count: 4, perCost: "2,428,000원", price: "9,712,000원" },
+                            { name: "Memory", spec: "HPE 32G 2Rx4 PC4-2666V-R Smart Kit", count: 24, perCost: "414,000원", price: "9,936,000원" },
+                            { name: "DISK", spec: "HPE 1.2TB SAS 10K SFF SC DS HDD", count: 12, perCost: "417,000원", price: "5,004,000원" },
+                            { name: "NIC", spec: "HPE Eth 10Gb 2p 562FLR-T Adptr", count: 2, perCost: "313,000원", price: "626,000원" },
+                            { name: "NIC", spec: "HPE Eth 10Gb 2p 562T Adptr", count: 6, perCost: "333,000원", price: "1,998,000원" },
+
+                        ]
+                    }
+                ]
             };
         }
     }
@@ -86,12 +111,12 @@ import { VueGoodTable } from 'vue-good-table'
     top: 5%;
     left: 2%;
     width: 96%;
-    height: 40%;
+    height: 50%;
     background-color: #f4f6f6;
 }
 .power-estimation {
     position: absolute;
-    top: 50%;
+    top: 60%;
     left: 2%;
     width: 96%;
     height: 45%;

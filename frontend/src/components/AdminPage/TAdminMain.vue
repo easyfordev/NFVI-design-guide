@@ -91,7 +91,7 @@ export default {
     },
     methods: {
         onTypeSelected(val){
-            let url = 'http://localhost:3000/v2/' + val.toString();
+            let url = 'http://localhost:3000/v1/' + val.toString();
             this.$http.get(url)
                 .then(response => {
                     let keys = Object.keys(response.data.data[0]);

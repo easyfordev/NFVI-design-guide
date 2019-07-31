@@ -19,7 +19,6 @@
                     <option>+ 새로운 Workload 추가하기</option>
                 </select>
             </label>
-
         </div>
     </div>
 </template>

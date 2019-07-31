@@ -229,6 +229,7 @@ export default {
                     this.nicStyle = this.normalStyle;
                     break;
             }
+
             if(event.currentTarget.id === 'server'){
                 this.specData.title = 'Server';
                 this.serverStyle = this.selectedStyle;

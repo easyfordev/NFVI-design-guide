@@ -2,7 +2,7 @@
     <div class="t-input-main">
         <t-input-section1></t-input-section1>
         <t-input-section2></t-input-section2>
-        <button id="clear-btn"><span>Clear</span></button>
+        <button id="clear-btn" @click="sendToServer"><span>Clear</span></button>
         <button id="done-btn" @click="isClicked"><span>Done</span></button>
     </div>
 </template>
@@ -17,6 +17,20 @@ export default {
     methods: {
         isClicked(){
             this.$router.push({name: 'TResultMain'})
+        },
+        sendToServer(){
+            // console.log(this.$store.state.app.serverId);
+            // console.log(this.$store.state.app.serverCount);
+
+            let json = {
+                "serverId" : this.$store.state.app.serverId,
+                "serverCount" : this.$store.state.app.serverCount,
+                "cpuId": this.$store.state.app.cpuId,
+                "cpuCount" : this.$store.state.app.cpuCount,
+            };
+            this.$http.post('http://localhost:3000/v1/calculate',json)
+                .then(response => {
+                });
         }
     }
 }

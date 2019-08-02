@@ -11,9 +11,9 @@
                 <p class="items" id="disk" @click="categorySelected($event)" :style="diskStyle">DISK</p>
                 <p class="items" id="nic" @click="categorySelected($event)" :style="nicStyle">NIC</p>
             </div>
-            <div class="category"  style="width: 100%;">스토리지<img class="arrow" src="../../assets/arrow-up.png"></div>
-            <div class="category"  style="width: 100%;">네트워크 스위치<img class="arrow" src="../../assets/arrow-up.png"></div>
-            <div class="category"  style="width: 100%;">기타 장비<img class="arrow" src="../../assets/arrow-up.png"></div>
+            <div class="category" style="width: 100%;">스토리지<img class="arrow" src="../../assets/arrow-up.png"></div>
+            <div class="category" style="width: 100%;">네트워크 스위치<img class="arrow" src="../../assets/arrow-up.png"></div>
+            <div class="category" style="width: 100%;">기타 장비<img class="arrow" src="../../assets/arrow-up.png"></div>
         </div>
 
         <div class="hw-specific">
@@ -25,18 +25,21 @@
                 <table>
                     <th v-for="hitem in specData.tableHeaders" :key="hitem.key">{{ hitem }}</th>
                     <tr v-for="item in specData.tableItems" :key="item.key">
-                        <td style="width: 2%"><input type="checkbox" @click="cpuSelected(item.processnum)"></td>
+                        <td style="width: 2%"><input type="radio" v-model="cpuId" :value="item.partnum"></td>
                         <td style="width: 30%;height: 10%">{{item.name}}</td>
                         <td style="width: 15%;text-align: center">{{item.clock}}GHz</td>
                         <td style="width: 10%;text-align: center">{{item.core}}core</td>
-                                                <!--가격 일단 지우기-->
-                                                <td style="width: 13%;text-align: center">{{ commafy(item.price)}}원</td>
+                        <!--가격 일단 지우기-->
+                        <td style="width: 13%;text-align: center">{{ commafy(item.price)}}원</td>
                         <!--<td style="width: 10%;text-align: center">{{ commafy(1234000)}}원</td>-->
                         <td style="width: 7%; font-size: 12px;text-align: center">{{item.NEBS}}</td>
                         <td style="width: 10%; font-weight: bold;color: #EA002C;text-align: center">{{commafy(item.TPMc)}}</td>
                         <td style="width: 10%; font-weight: bold;color: #EA002C;text-align: center">{{(item.TPMc/item.price).toPrecision(3)}}점</td>
                         <td style="width: 8%; font-weight: bold;color: forestgreen;text-align: center" >{{isMaxValue((item.TPMc/item.price).toPrecision(3))}}</td>
-                        <td style="width: 10%; text-align: center" ><input type="number" style="width: 35px"></td>
+                        <td style="width: 10%; text-align: center" >
+                            <input v-if="cpuId === item.partnum" type="number" style="width: 35px" v-model.number="cpuCount"/>
+                            <input v-else type="number" style="width: 50px; text-align: center" disabled/>
+                        </td>
                     </tr>
                 </table>
             </div>
@@ -44,15 +47,14 @@
             <div class="spec-contents" v-else-if="specData.title === 'Memory'">
                 <label style="font-size: 14px; font-weight: bold; padding-left: 10px">
                     목표 용량
-                    <select class="type-dropdown">
-                        <option>384GB</option>
+                    <select class="type-dropdown" v-model.number="memTarget">
+                        <option v-for="item in memVolums" :key="item.key" :value="item">{{item}}GB</option>
                     </select>
                 </label>
                 <table>
                     <th v-for="hitem in specData.tableHeaders" :key="hitem.key">{{ hitem }}</th>
                     <tr v-for="item in specData.tableItems" :key="item.key">
-<!--                        <td>{{item}}</td>-->
-                        <td style="width: 2%"><input type="checkbox" @click="cpuSelected(item.processnum)"></td>
+                        <td style="width: 2%"><input type="radio" v-model="memoryId" :value="item.partnum"></td>
                         <td style="width: 28%">{{item.name}}</td>
                         <td>{{item.speed}}</td>
                         <td>{{item.volume}}</td>
@@ -60,8 +62,11 @@
                         <td style="width: 8%;">{{item.pcs}}개</td>
                         <td style="font-weight: bold;color: #EA002C;text-align: center">{{item.score}}점</td>
                         <td style="width: 12%;font-weight: bold;color: #EA002C;text-align: center">{{commafy(item.price * item.pcs)}}원</td>
-                        <td><span v-if="item.volume == 32" style="width: 8%; font-weight: bold;color: forestgreen;text-align: center">BEST!</span></td>
-                        <td><input type="number" style="width: 25px;"/></td>
+                        <td><span style="width: 8%; font-weight: bold;color: forestgreen;text-align: center">BEST!</span></td>
+                        <td>
+                            <input v-if="memoryId === item.partnum" type="number" style="width: 25px" v-model.number="memoryCount"/>
+                            <input v-else type="number" style="width: 25px; text-align: center" disabled/>
+                        </td>
                     </tr>
                 </table>
             </div>
@@ -70,12 +75,15 @@
                 <table>
                     <th v-for="hitem in specData.tableHeaders" :key="hitem.key">{{ hitem }}</th>
                     <tr v-for="item in specData.tableItems" :key="item.key">
-                        <td style="width: 2%"><input type="checkbox"></td>
+                        <td style="width: 2%"><input type="radio" v-model="serverId" :value="item.partnum"></td>
                         <td style="width: 10%;height: 10%">{{item.vendor}}</td>
                         <td style="width: 35%;height: 10%">{{item.name}}</td>
                         <td style="width: 10%;height: 10%">{{item.size}}U</td>
                         <td style="width: 10%;height: 10%">{{item.numOfCpu}}개</td>
-                        <td style="width: 10%;height: 10%"><input type="number" style="width: 50px; text-align: center"/></td>
+                        <td style="width: 10%;height: 10%">
+                            <input v-if="serverId === item.partnum" type="number" style="width: 50px; text-align: center" v-model.number="serverCount"/>
+                            <input v-else type="number" style="width: 50px; text-align: center" disabled/>
+                        </td>
                     </tr>
                 </table>
             </div>
@@ -135,9 +143,14 @@ export default {
                 tableHeaders: [],
                 tableItems: [ ]
             },
-            serverParams: {
-                selectedServer: 0
-            },
+            memVolums: [384,768,192,512,256],
+            memTarget: 384,
+            serverId: '',
+            serverCount: 0,
+            cpuId: '',
+            cpuCount: 0,
+            memoryId: '',
+            memoryCount: 0,
             selectedStyle: 'background-color: #FF7A00; color: white',
             normalStyle: 'background-color: #FFFFFF; color: black',
             serverStyle: this.normalStyle,
@@ -150,6 +163,20 @@ export default {
     created: function() {
         // this.getCPUData();
     },
+    watch: {
+        serverId: function () {
+            this.$store.commit('app/serverId', this.serverId);
+        },
+        serverCount: function () {
+            this.$store.commit('app/serverCount', this.serverCount);
+        },
+        cpuId: function () {
+            this.$store.commit('app/cpuId', this.cpuId);
+        },
+        cpuCount: function () {
+            this.$store.commit('app/cpuCount', this.cpuCount);
+        },
+    },
     methods: {
         toggleServer: function(){
             this.toggleCatServer = !this.toggleCatServer;
@@ -160,21 +187,23 @@ export default {
             }
         },
         getCPUData: function() {
-            this.$http.get('http://localhost:3000/v2/cpu')
+            this.$http.get('http://localhost:3000/v1/cpu')
                 .then(response => {
                     this.specData.tableHeaders = ['','부품 정보','Clock속도', 'Core수', '가격', 'NEBS Lv3', '성능 점수', '가성비 점수', '추천', '수량'];
                     this.specData.tableItems = response.data.data;
                 });
         },
         getMemoryData: function() {
-            this.$http.get('http://localhost:3000/v2/memory')
+            this.$http.get('http://localhost:3000/v1/memory', {
+                params: { target: this.memTarget }
+            })
                 .then(response => {
-                    this.specData.tableHeaders = ['','부품 정보', '속도', '개당 용량', '가격', '갯수','성능 점수', '총 가격', '추천', '수량'];
+                    this.specData.tableHeaders = ['','부품 정보', '속도', '개당 용량', '가격', '갯수','상대적 성능', '총 가격', '추천', '수량'];
                     this.specData.tableItems = response.data.data;
                 });
         },
         getServerData: function() {
-            this.$http.get('http://localhost:3000/v2/server')
+            this.$http.get('http://localhost:3000/v1/server')
                 .then(response => {
                     this.specData.tableHeaders = ['','벤더','부품 정보','RU','CPU 개수', '수량'];
                     this.specData.tableItems = response.data.data;
@@ -204,10 +233,6 @@ export default {
                 str[1] = str[1].replace(/(\d{3})/g, '$1 ');
             }
             return str.join('.');
-        },
-        cpuSelected(id){
-            // TODO : selectedID 서버에 넘기기(받는건 된다)
-            this.serverParams.selectedServer = id;
         },
         categorySelected(event){
             var prevSelected = this.specData.title;

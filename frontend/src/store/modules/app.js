@@ -2,28 +2,10 @@
 
 const state = {
     hid: 'hello',
-    server: {
-        vid: '',
-        pid: '',
-        count: 0
-    },
-    cpu: {
-        vid: '',
-        pid: '',
-        count: 0
-    },
-    memory: {
-        id: '',
-        count: 0
-    },
-    disk: {
-        id: '',
-        count: 0
-    },
-    nic: {
-        id: '',
-        count: 0
-    },
+    serverId: '',
+    serverCount: 0,
+    cpuId: '',
+    cpuCount: 0,
 };
 
 const getters  = {
@@ -32,8 +14,17 @@ const getters  = {
 };
 
 const mutations = {
-    hid ( state, payload )  {
-        state.hid  = payload
+    serverId ( state, payload )  {
+        state.serverId  = payload
+    },
+    serverCount ( state, payload )  {
+        state.serverCount  = payload
+    },
+    cpuId ( state, payload )  {
+        state.cpuId  = payload
+    },
+    cpuCount ( state, payload )  {
+        state.cpuCount  = payload
     },
     end () {}
 };

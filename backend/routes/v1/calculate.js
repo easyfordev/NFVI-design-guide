@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-// var mysql = require('mysql');
+var mysql = require('mysql');
 //
 // var conn = mysql.createConnection({
 //     host: '172.27.19.33',
@@ -9,7 +9,14 @@ var router = express.Router();
 //     password: 'Pcl.237790*',
 //     database: 'nfvi'
 // });
-// conn.connect();
+var conn = mysql.createConnection({
+    host: 'localhost',
+    port: '3306',
+    user: 'root',
+    password: 'easy88ch',
+    database: 'nfvi'
+});
+conn.connect();
 
 // let labels = [];
 let data = [];

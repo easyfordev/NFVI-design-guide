@@ -6,6 +6,9 @@ const state = {
     serverCount: 0,
     cpuId: '',
     cpuCount: 0,
+    memTarget: 0,
+    memoryId: '',
+    memoryCount: 0
 };
 
 const getters  = {
@@ -25,6 +28,15 @@ const mutations = {
     },
     cpuCount ( state, payload )  {
         state.cpuCount  = payload
+    },
+    memTarget ( state, payload )  {
+        state.memTarget  = payload
+    },
+    memoryId ( state, payload )  {
+        state.memoryId  = payload
+    },
+    memoryCount ( state, payload )  {
+        state.memoryCount  = payload
     },
     end () {}
 };

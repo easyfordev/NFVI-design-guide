@@ -176,6 +176,16 @@ export default {
         cpuCount: function () {
             this.$store.commit('app/cpuCount', this.cpuCount);
         },
+        memTarget: function () {
+            this.$store.commit('app/memTarget', this.memTarget);
+            this.getMemoryData();
+        },
+        memoryId: function () {
+            this.$store.commit('app/memoryId', this.memoryId);
+        },
+        memoryCount: function () {
+            this.$store.commit('app/memoryCount', this.memoryCount);
+        },
     },
     methods: {
         toggleServer: function(){
@@ -198,6 +208,7 @@ export default {
                 params: { target: this.memTarget }
             })
                 .then(response => {
+                    console.log(response.data.data);
                     this.specData.tableHeaders = ['','부품 정보', '속도', '개당 용량', '가격', '갯수','상대적 성능', '총 가격', '추천', '수량'];
                     this.specData.tableItems = response.data.data;
                 });

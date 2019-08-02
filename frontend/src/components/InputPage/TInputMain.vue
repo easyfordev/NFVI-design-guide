@@ -19,14 +19,16 @@ export default {
             this.$router.push({name: 'TResultMain'})
         },
         sendToServer(){
-            // console.log(this.$store.state.app.serverId);
-            // console.log(this.$store.state.app.serverCount);
+            console.log(this.$store.state.app.serverId);
+            console.log(this.$store.state.app.serverCount);
 
             let json = {
                 "serverId" : this.$store.state.app.serverId,
                 "serverCount" : this.$store.state.app.serverCount,
                 "cpuId": this.$store.state.app.cpuId,
                 "cpuCount" : this.$store.state.app.cpuCount,
+                "memoryId": this.$store.state.app.memoryId,
+                "memoryCount" : this.$store.state.app.memoryCount,
             };
             this.$http.post('http://localhost:3000/v1/calculate',json)
                 .then(response => {

@@ -5,6 +5,8 @@ import axios from 'axios'
 import VueGoodTablePlugin from 'vue-good-table'
 import 'vue-good-table/dist/vue-good-table.css'
 import store from './store'
+import 'bootstrap'
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 Vue.config.productionTip = false;
 Vue.prototype.$http = axios;

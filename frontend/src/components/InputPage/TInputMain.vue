@@ -14,6 +14,8 @@ import TInputSection2 from "./TInputSection2"
 export default {
     name: "TInputMain",
     components: { TInputSection1, TInputSection2 },
+    created: function() {
+    },
     methods: {
         isClicked(){
             this.$router.push({name: 'TResultMain'})
@@ -32,6 +34,7 @@ export default {
             };
             this.$http.post('http://localhost:3000/v1/calculate',json)
                 .then(response => {
+                    response.data
                 });
         }
     }

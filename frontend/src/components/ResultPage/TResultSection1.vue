@@ -14,7 +14,6 @@
                     :disabled="!enabled"
                     class="list-group"
                     ghost-class="ghost"
-                    :move="checkMove"
                     @start="dragging = true"
                     @end="dragging = false"
             >
@@ -45,54 +44,26 @@ export default {
             pageTitle: '',
             myStyle: 'position: absolute; top: 12%; height: 700px; border: 10px solid transparent',
             enabled: true,
-            items: [
-                { name: "T-probe", type: "etc", id: 5, number: "", ru: 1},
-                { name: "Switch", type: "mgmt-switch", id: 0, number: "#01", ru: 1},
-                { name: "", type: "blank", id: 5, number: "", ru: 1},
-                { name: "Switch", type: "mgmt-switch", id: 0, number: "#02", ru: 1},
-                { name: "", type: "blank", id: 5, number: "", ru: 1},
-                { name: "Switch", type: "service-switch", id: 0, number: "#01", ru: 1},
-                { name: "", type: "blank", id: 5, number: "", ru: 1},
-                { name: "Switch", type: "service-switch", id: 0, number: "#02", ru: 1},
-                { name: "", type: "blank", id: 5, number: "", ru: 1},
-                { name: "Server", type: "server", id: 2, number: "#01", ru: 2},
-                { name: "", type: "blank", id: 5, number: "", ru: 1},
-                { name: "", type: "blank", id: 5, number: "", ru: 1},
-                { name: "", type: "blank", id: 5, number: "", ru: 1},
-                { name: "", type: "blank", id: 5, number: "", ru: 1},
-                { name: "", type: "blank", id: 5, number: "", ru: 1},
-                { name: "", type: "blank", id: 5, number: "", ru: 1},
-                { name: "", type: "blank", id: 5, number: "", ru: 1},
-                { name: "KVM", type: "etc", id: 5, number: "", ru: 1},
-                { name: "", type: "blank", id: 5, number: "", ru: 1},
-                { name: "", type: "blank", id: 5, number: "", ru: 1},
-                { name: "", type: "blank", id: 5, number: "", ru: 1},
-                { name: "", type: "blank", id: 5, number: "", ru: 1},
-                { name: "", type: "blank", id: 5, number: "", ru: 1},
-                { name: "", type: "blank", id: 5, number: "", ru: 1},
-                { name: "", type: "blank", id: 5, number: "", ru: 1},
-                { name: "", type: "blank", id: 5, number: "", ru: 1},
-                { name: "", type: "blank", id: 5, number: "", ru: 1},
-                { name: "", type: "blank", id: 5, number: "", ru: 1},
-                { name: "", type: "blank", id: 5, number: "", ru: 1},
-                { name: "Server", type: "server", id: 3, number: "#02", ru: 1},
-                { name: "Server", type: "server", id: 4, number: "#03", ru: 1},
-                { name: "Server", type: "server", id: 5, number: "#04", ru: 1},
-                { name: "Server", type: "server", id: 5, number: "#05", ru: 1},
-                { name: "Server", type: "server", id: 5, number: "#06", ru: 1},
-                { name: "Server", type: "server", id: 5, number: "#07", ru: 1},
-                { name: "", type: "blank", id: 5, number: "", ru: 1},
-                { name: "", type: "blank", id: 5, number: "", ru: 1},
-                { name: "", type: "blank", id: 5, number: "", ru: 1},
-                { name: "Storage", type: "storage", id: 1,number: "#01", ru: 2},
-
-            ],
+            items: [],
             dragging: false
         }
     },
     created: function() {
         this.pageTitle = 'Rack 구성도';
+        // TODO : 스위치, 스토리지 갯수, 타입 입력 받기
+        this.$store.commit('app/serviceSwitchCount', 2);
+        this.$store.commit('app/serviceSwitchId', 'DCS-7050SX3-48YC12-F');
+
+        this.$store.commit('app/mgmtSwitchCount', 2);
+        this.$store.commit('app/mgmtSwitchId', 'DCS-7280TR-48C6-F');
+
+        this.$store.commit('app/storageCount', 1);
+        this.$store.commit('app/storageId', 'storage-1234');
         this.getItemList();
+        // console.log(">>>" + this.$store.state.app.mgmtSwitchCount);
+        // console.log(">>>" + this.$store.state.app.storageCount);
+        // console.log(">>>" + this.$store.state.app.serviceSwitchCount);
+
     },
     computed: {
         draggingInfo() {
@@ -100,6 +71,16 @@ export default {
         }
     },
     methods: {
+        getItemList(){
+            let json = this.$store.state.app;
+            console.log(json);
+            this.$http.post('http://localhost:3000/v1/rack', json)
+                .then(response => {
+                    console.log(response.data.items);
+                    this.items = response.data.items;
+
+                });
+        },
         onMouseEnter() {
             // alert("HI")
             this.myStyle = 'position: absolute; top: 12%; height: 700px; border: 10px solid lightcoral';
@@ -124,8 +105,6 @@ export default {
             } else if(size === 1) {
                 return '21px';
             }
-        },
-        getItemList(){
         },
         getItemStyle(type) {
             if(type === "server"){
@@ -165,7 +144,7 @@ export default {
             if(size === 1){
                 return '15px';
             } else if (size === 2){
-                return '33px'
+                return '35px'
             }
         }
     }

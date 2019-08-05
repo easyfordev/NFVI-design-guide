@@ -17,7 +17,7 @@
                     @start="dragging = true"
                     @end="dragging = false"
             >
-                <tr v-for="item in items" :key="item.id">
+                <tr v-for="item in items" :key="item.key">
                     <td style=""><img border="0" width="150px" :src="getImgSrc(item.type, item.ru)" :height="getImgHeight(item.ru)"/></td>
                     <td :height="getItemHeight(item.ru)" :style="getItemStyle(item.type)" rowspan="2">
                         {{ item.name }} {{item.number}}
@@ -59,6 +59,10 @@ export default {
 
         this.$store.commit('app/storageCount', 1);
         this.$store.commit('app/storageId', 'storage-1234');
+
+        this.$store.commit('app/serverCount', 12);
+        this.$store.commit('app/serverId', '867959-B21');
+
         this.getItemList();
         // console.log(">>>" + this.$store.state.app.mgmtSwitchCount);
         // console.log(">>>" + this.$store.state.app.storageCount);

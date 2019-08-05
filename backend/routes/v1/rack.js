@@ -21,9 +21,11 @@ conn.connect();
 // let labels = [];
 var total_size = 41;
 var count = 1;
+var count_ru = 0;
 
 let items = [];
 let user_req = {};
+
 // [
 //     { name: "T-probe", type: "etc", id: 0, number: "", ru: 1},
 //     { name: "Switch", type: "mgmt-switch", id: 1, number: "#01", ru: 1},
@@ -70,9 +72,15 @@ router.post('/', function (req, res, next){
     user_req = req.body;
 
     getServiceSwitchInfo().then(function () {
-    //     return getWarn();
-    // }).then(function () {
-    //     return getError();
+        return getMgmtSwitchInfo();
+    }).then(function () {
+        return getServerInfo();
+    }).then(function () {
+        return getStorageInfo();
+    }).then(function () {
+        return setDefaultItems();
+    }).then(function () {
+        return setBlankItems();
     }).then(function () {
         res.status(200).send({
             items: items
@@ -80,10 +88,11 @@ router.post('/', function (req, res, next){
         items = [];
     });
     total_size = 41;
+    count = 1;
+    count_ru = 0;
 });
 
 function getServiceSwitchInfo() {
-    // SELECT * FROM nfvi.server where partnum='867959-B21';
     return new Promise(function(resolve, reject){
         conn.query('SELECT * FROM switch where partnum=?', user_req.serviceSwitchId,
             function (error, result) {
@@ -95,12 +104,14 @@ function getServiceSwitchInfo() {
                 }
                 else {
                     //     { name: "Switch", type: "service-switch", id: 7, number: "#02", ru: 1},
+                    //     { name: "", type: "blank", id: 28, number: "", ru: 1},
                     for(let i=1;i<=user_req.serviceSwitchCount;i++){
                         let json = {};
                         json["name"] = "Service Switch";
                         json["type"] = "service-switch";
-                        json['id'] = count;
+                        json['id'] = count++;
                         json['ru'] = result[0].ru;
+                        count_ru +=  result[0].ru;
                         if(user_req.serviceSwitchCount < 10){
                             json['number'] = "#0" + (i).toString();
 
@@ -108,11 +119,155 @@ function getServiceSwitchInfo() {
                             json['number'] = "#" + (i).toString();
                         }
                         items.push(json);
-                        count++;
+
+                        let blank_json = { name: "", type: "blank", id: 0, number: "", ru: 1};
+                        blank_json["id"] = count++;
+                        count_ru += 1;
+                        items.push(blank_json);
                     }
                     resolve();
                 }
             });
+    });
+}
+
+function getMgmtSwitchInfo() {
+    return new Promise(function(resolve, reject){
+        conn.query('SELECT * FROM switch where partnum=?', user_req.mgmtSwitchId,
+            function (error, result) {
+                if(error) {
+                    res.status(400).send({
+                        status: "fail",
+                        msg: error
+                    });
+                }
+                else {
+                    for(let i=1;i<=user_req.mgmtSwitchCount;i++){
+                        let json = {};
+                        json["name"] = "MGMT Switch";
+                        json["type"] = "mgmt-switch";
+                        json['id'] = count++;
+                        json['ru'] = result[0].ru;
+                        count_ru +=  result[0].ru;
+                        if(user_req.mgmtSwitchCount < 10){
+                            json['number'] = "#0" + (i).toString();
+
+                        } else {
+                            json['number'] = "#" + (i).toString();
+                        }
+                        items.push(json);
+
+                        let blank_json = { name: "", type: "blank", id: 0, number: "", ru: 1};
+                        blank_json["id"] = count++;
+                        count_ru += 1;
+                        items.push(blank_json);
+                    }
+                    resolve();
+                }
+            });
+    });
+}
+
+function getServerInfo() {
+    return new Promise(function(resolve, reject){
+        // SELECT * FROM nfvi.server where partnum = '867959-B21';
+        conn.query('SELECT * FROM server where partnum=?', user_req.serverId,
+            function (error, result) {
+                if(error) {
+                    res.status(400).send({
+                        status: "fail",
+                        msg: error
+                    });
+                }
+                else {
+                    for(let i=1;i<=user_req.serverCount;i++){
+                        let json = {};
+                        json["name"] = "Server";
+                        json["type"] = "server";
+                        json['id'] = count++;
+                        json['ru'] = result[0].ru;
+                        count_ru +=  result[0].ru;
+                        if(user_req.serverCount < 10){
+                            json['number'] = "#0" + (i).toString();
+
+                        } else {
+                            json['number'] = "#" + (i).toString();
+                        }
+                        items.push(json);
+
+                        let blank_json = { name: "", type: "blank", id: 0, number: "", ru: 1};
+                        blank_json["id"] = count++;
+                        count_ru += 1;
+                        items.push(blank_json);
+                    }
+                    resolve();
+                }
+            });
+    });
+}
+
+function getStorageInfo() {
+    return new Promise(function(resolve, reject){
+        conn.query('SELECT * FROM nfvi.storage where partnum=?', user_req.storageId,
+            function (error, result) {
+                if(error) {
+                    res.status(400).send({
+                        status: "fail",
+                        msg: error
+                    });
+                }
+                else {
+                    for(let i=1;i<=user_req.storageCount;i++){
+                        let json = {};
+                        json["name"] = "Storage";
+                        json["type"] = "storage";
+                        json['id'] = count++;
+                        json['ru'] = result[0].ru;
+                        count_ru +=  result[0].ru;
+                        if(user_req.storageCount < 10){
+                            json['number'] = "#0" + (i).toString();
+
+                        } else {
+                            json['number'] = "#" + (i).toString();
+                        }
+                        items.push(json);
+                    }
+                    resolve();
+                }
+            });
+    });
+}
+
+function setDefaultItems() {
+    return new Promise(function(resolve, reject){
+        let item1 = { name: "", type: "etc", id: 17, number: "", ru: 1};
+        item1["name"] = "T-probe";
+        item1["id"] = count++;
+        count_ru +=  1;
+        items.splice(0,0,item1);
+
+        let item2 = { name: "", type: "etc", id: 17, number: "", ru: 1};
+        item2["name"] = "KVM";
+        item2["id"] = count++;
+        count_ru +=  1;
+
+        items.splice(21,0,item2);
+        resolve();
+    });
+}
+
+function setBlankItems() {
+    return new Promise(function(resolve, reject){
+        console.log(">> count : " + count);
+        console.log(">> left : " + (41 - count_ru));
+        let remains = 41-count_ru;
+        for(let i=1;i<=remains;i++){
+            let blank_json = { name: "", type: "blank", id: 0, number: "", ru: 1};
+            blank_json["id"] = count++;
+            count_ru += 1;
+            items.push(blank_json);
+        }
+        resolve();
     });
 }
 

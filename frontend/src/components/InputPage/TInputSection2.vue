@@ -11,8 +11,11 @@
                 <p class="items" id="disk" @click="categorySelected($event)" :style="diskStyle">DISK</p>
                 <p class="items" id="nic" @click="categorySelected($event)" :style="nicStyle">NIC</p>
             </div>
+            <div class="category" @click="toggleSwitch()" style="width: 100%;">네트워크 스위치<img class="arrow" :src="arrowSwitchImg"></div>
+            <div class="categories-server" v-if="toggleCatSwitch">
+                <p class="items" id="switch" @click="categorySelected($event)" :style="switchStyle">Switch</p>
+            </div>
             <div class="category" style="width: 100%;">스토리지<img class="arrow" src="../../assets/arrow-up.png"></div>
-            <div class="category" style="width: 100%;">네트워크 스위치<img class="arrow" src="../../assets/arrow-up.png"></div>
             <div class="category" style="width: 100%;">기타 장비<img class="arrow" src="../../assets/arrow-up.png"></div>
         </div>
 
@@ -64,8 +67,8 @@
                         <td style="width: 12%;font-weight: bold;color: #EA002C;text-align: center">{{commafy(item.price * item.pcs)}}원</td>
                         <td><span style="width: 8%; font-weight: bold;color: forestgreen;text-align: center">BEST!</span></td>
                         <td>
-                            <input v-if="memoryId === item.partnum" type="number" style="width: 25px" v-model.number="memoryCount"/>
-                            <input v-else type="number" style="width: 25px; text-align: center" disabled/>
+                            <input v-if="memoryId === item.partnum" type="number" style="width: 50px" v-model.number="memoryCount"/>
+                            <input v-else type="number" style="width: 50px; text-align: center" disabled/>
                         </td>
                     </tr>
                 </table>
@@ -78,7 +81,7 @@
                         <td style="width: 2%"><input type="radio" v-model="serverId" :value="item.partnum"></td>
                         <td style="width: 10%;height: 10%">{{item.vendor}}</td>
                         <td style="width: 35%;height: 10%">{{item.name}}</td>
-                        <td style="width: 10%;height: 10%">{{item.size}}U</td>
+                        <td style="width: 10%;height: 10%">{{item.ru}}U</td>
                         <td style="width: 10%;height: 10%">{{item.numOfCpu}}개</td>
                         <td style="width: 10%;height: 10%">
                             <input v-if="serverId === item.partnum" type="number" style="width: 50px; text-align: center" v-model.number="serverCount"/>
@@ -127,6 +130,10 @@
                     </tr>
                 </table>
             </div>
+            <div class="spec-contents" v-else-if="specData.title === 'Switch'">
+                <p style="font-size: 15px; text-align: center">This is Switch!</p>
+            </div>
+
         </div>
     </div>
 </template>
@@ -137,7 +144,11 @@ export default {
     data: function() {
         return {
             toggleCatServer: false,
+            toggleCatSwitch: false,
+            toggleCatStorage: false,
             arrowServerImg: require('../../assets/arrow-up.png'),
+            arrowSwitchImg: require('../../assets/arrow-up.png'),
+            arrowStorageImg: require('../../assets/arrow-up.png'),
             specData: {
                 title: '',
                 tableHeaders: [],
@@ -151,13 +162,16 @@ export default {
             cpuCount: 0,
             memoryId: '',
             memoryCount: 0,
+            diskId: '',
+            diskCount: 0,
             selectedStyle: 'background-color: #FF7A00; color: white',
             normalStyle: 'background-color: #FFFFFF; color: black',
             serverStyle: this.normalStyle,
             cpuStyle: this.normalStyle,
             memoryStyle: this.normalStyle,
             diskStyle: this.normalStyle,
-            nicStyle: this.normalStyle
+            nicStyle: this.normalStyle,
+            switchStyle: this.normalStyle,
         }
     },
     created: function() {
@@ -186,11 +200,33 @@ export default {
         memoryCount: function () {
             this.$store.commit('app/memoryCount', this.memoryCount);
         },
+        diskId: function () {
+            this.$store.commit('app/memoryCount', this.memoryCount);
+        },
+        diskCount: function () {
+            this.$store.commit('app/memoryCount', this.memoryCount);
+        },
     },
     methods: {
         toggleServer: function(){
             this.toggleCatServer = !this.toggleCatServer;
             if (this.toggleCatServer === true) {
+                this.arrowServerImg = require('../../assets/arrow-down.png');
+            } else {
+                this.arrowServerImg = require('../../assets/arrow-up.png');
+            }
+        },
+        toggleSwitch: function(){
+            this.toggleCatSwitch= !this.toggleCatSwitch;
+            if (this.toggleCatSwitch === true) {
+                this.arrowServerImg = require('../../assets/arrow-down.png');
+            } else {
+                this.arrowServerImg = require('../../assets/arrow-up.png');
+            }
+        },
+        toggleStorage: function(){
+            this.toggleCatStorage = !this.toggleCatStorage;
+            if (this.toggleCatStorage === true) {
                 this.arrowServerImg = require('../../assets/arrow-down.png');
             } else {
                 this.arrowServerImg = require('../../assets/arrow-up.png');
@@ -264,6 +300,9 @@ export default {
                 case "NIC":
                     this.nicStyle = this.normalStyle;
                     break;
+                case "Switch":
+                    this.switchStyle = this.normalStyle;
+                    break;
             }
 
             if(event.currentTarget.id === 'server'){
@@ -284,6 +323,9 @@ export default {
             } else if(event.currentTarget.id === 'nic'){
                 this.specData.title = 'NIC';
                 this.nicStyle = this.selectedStyle;
+            } else if(event.currentTarget.id === 'switch'){
+                this.specData.title = 'Switch';
+                this.switchStyle = this.selectedStyle;
             }
         }
 }

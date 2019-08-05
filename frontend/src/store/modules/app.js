@@ -13,7 +13,9 @@ const state = {
     mgmtSwitchId: '',
     mgmtSwitchCount: 0,
     storageId: '',
-    storageCount: 0
+    storageCount: 0,
+    diskId: '',
+    diskCount: 0,
 };
 
 const getters  = {
@@ -60,6 +62,12 @@ const mutations = {
     },
     storageId ( state, payload )  {
         state.storageId  = payload
+    },
+    diskCount ( state, payload )  {
+        state.diskCount  = payload
+    },
+    diskId ( state, payload )  {
+        state.diskId  = payload
     },
     end () {}
 };

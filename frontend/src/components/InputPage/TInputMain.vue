@@ -23,15 +23,17 @@ export default {
         sendToServer(){
             // console.log(this.$store.state.app.serverId);
             // console.log(this.$store.state.app.serverCount);
+            // TODO : 스위치, 스토리지 갯수, 타입 입력 받기
+            this.$store.commit('app/serviceSwitchCount', 2);
+            this.$store.commit('app/serviceSwitchId', 'DCS-7050SX3-48YC12-F');
 
-            let json = {
-                "serverId" : this.$store.state.app.serverId,
-                "serverCount" : this.$store.state.app.serverCount,
-                "cpuId": this.$store.state.app.cpuId,
-                "cpuCount" : this.$store.state.app.cpuCount,
-                "memoryId": this.$store.state.app.memoryId,
-                "memoryCount" : this.$store.state.app.memoryCount,
-            };
+            this.$store.commit('app/mgmtSwitchCount', 2);
+            this.$store.commit('app/mgmtSwitchId', 'DCS-7280TR-48C6-F');
+
+            this.$store.commit('app/storageCount', 1);
+            this.$store.commit('app/storageId', 'storage-1234');
+
+            let json = this.$store.state.app;
             this.$http.post('http://localhost:3000/v1/calculate',json)
                 .then(response => {
                     response.data

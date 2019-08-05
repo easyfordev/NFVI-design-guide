@@ -1,7 +1,7 @@
 <template>
     <div class="t-result-section1">
         <p id="big-title" @click="goToHome">시스템 가상화 인프라 디자인</p>
-        <p class="mid-title">{{ pageTitle }} {{ draggingInfo }}</p>
+        <p class="mid-title">{{ pageTitle }}</p>
 
         <div class="rack-item-images">
 
@@ -28,6 +28,8 @@
             </draggable>
         </div>
         <img class="rack-chassis" src="../../assets/rack.png"/>
+        <button style="position: absolute; left: 650px" @click="onClickMenu1">Temp1</button>
+        <button style="position: absolute; left: 650px; top: 200px" @click="onClickMenu2">Temp2</button>
     </div>
 </template>
 
@@ -42,7 +44,7 @@ export default {
     data: function() {
         return {
             pageTitle: '',
-            myStyle: 'position: absolute; top: 12%; height: 700px; border: 10px solid transparent',
+            myStyle: '',
             enabled: true,
             items: [],
             dragging: false
@@ -50,18 +52,6 @@ export default {
     },
     created: function() {
         this.pageTitle = 'Rack 구성도';
-        // TODO : 스위치, 스토리지 갯수, 타입 입력 받기
-        this.$store.commit('app/serviceSwitchCount', 2);
-        this.$store.commit('app/serviceSwitchId', 'DCS-7050SX3-48YC12-F');
-
-        this.$store.commit('app/mgmtSwitchCount', 2);
-        this.$store.commit('app/mgmtSwitchId', 'DCS-7280TR-48C6-F');
-
-        this.$store.commit('app/storageCount', 1);
-        this.$store.commit('app/storageId', 'storage-1234');
-
-        this.$store.commit('app/serverCount', 12);
-        this.$store.commit('app/serverId', '867959-B21');
 
         this.getItemList();
         // console.log(">>>" + this.$store.state.app.mgmtSwitchCount);
@@ -87,15 +77,19 @@ export default {
         },
         onMouseEnter() {
             // alert("HI")
-            this.myStyle = 'position: absolute; top: 12%; height: 700px; border: 10px solid lightcoral';
+            this.myStyle = 'background-color: lightcoral';
         },
         onMouseLeave() {
-            this.myStyle = 'position: absolute; top: 12%; height: 700px; border: 10px solid transparent';
+            this.myStyle = '';
         },
-        onRackClicked() {
-            this.myStyle = 'position: absolute; top: 12%; height: 700px; border: 10px solid lightcoral';
+        onClickMenu1() {
             this.$router.push({
                 name: 'TResultSection2'
+            })
+        },
+        onClickMenu2() {
+            this.$router.push({
+                name: 'TResultSection3'
             })
         },
         goToHome() {

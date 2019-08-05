@@ -19,8 +19,8 @@ export default {
             this.$router.push({name: 'TResultMain'})
         },
         sendToServer(){
-            console.log(this.$store.state.app.serverId);
-            console.log(this.$store.state.app.serverCount);
+            // console.log(this.$store.state.app.serverId);
+            // console.log(this.$store.state.app.serverCount);
 
             let json = {
                 "serverId" : this.$store.state.app.serverId,

@@ -28,8 +28,9 @@
             </draggable>
         </div>
         <img class="rack-chassis" src="../../assets/rack.png"/>
-        <button style="position: absolute; left: 650px" @click="onClickMenu1">Temp1</button>
-        <button style="position: absolute; left: 650px; top: 200px" @click="onClickMenu2">Temp2</button>
+        <button style="position: absolute; left: 650px" @click="onClickMenu1">비용</button>
+        <button style="position: absolute; left: 650px; top: 150px" @click="onClickMenu2">전력</button>
+        <button style="position: absolute; left: 650px; top: 200px" @click="onClickMenu3">네트워크</button>
     </div>
 </template>
 
@@ -67,7 +68,7 @@ export default {
     methods: {
         getItemList(){
             let json = this.$store.state.app;
-            console.log(json);
+            // console.log(json);
             this.$http.post('http://localhost:3000/v1/rack', json)
                 .then(response => {
                     console.log(response.data.items);
@@ -90,6 +91,11 @@ export default {
         onClickMenu2() {
             this.$router.push({
                 name: 'TResultSection3'
+            })
+        },
+        onClickMenu3() {
+            this.$router.push({
+                name: 'TResultSection4'
             })
         },
         goToHome() {

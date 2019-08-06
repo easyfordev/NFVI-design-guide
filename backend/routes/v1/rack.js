@@ -25,7 +25,6 @@ var count_ru = 0;
 
 let items = [];
 let user_req = {};
-
 // [
 //     { name: "T-probe", type: "etc", id: 0, number: "", ru: 1},
 //     { name: "Switch", type: "mgmt-switch", id: 1, number: "#01", ru: 1},
@@ -37,34 +36,9 @@ let user_req = {};
 //     { name: "Switch", type: "service-switch", id: 7, number: "#02", ru: 1},
 //     { name: "", type: "blank", id: 8, number: "", ru: 1},
 //     { name: "Server", type: "server", id: 9, number: "#01", ru: 2},
-//     { name: "", type: "blank", id: 10, number: "", ru: 1},
-//     { name: "", type: "blank", id: 11, number: "", ru: 1},
-//     { name: "", type: "blank", id: 12, number: "", ru: 1},
-//     { name: "", type: "blank", id: 13, number: "", ru: 1},
-//     { name: "", type: "blank", id: 14, number: "", ru: 1},
-//     { name: "", type: "blank", id: 15, number: "", ru: 1},
-//     { name: "", type: "blank", id: 16, number: "", ru: 1},
 //     { name: "KVM", type: "etc", id: 17, number: "", ru: 1},
-//     { name: "", type: "blank", id: 18, number: "", ru: 1},
-//     { name: "", type: "blank", id: 19, number: "", ru: 1},
-//     { name: "", type: "blank", id: 20, number: "", ru: 1},
-//     { name: "", type: "blank", id: 21, number: "", ru: 1},
-//     { name: "", type: "blank", id: 22, number: "", ru: 1},
-//     { name: "", type: "blank", id: 23, number: "", ru: 1},
-//     { name: "", type: "blank", id: 24, number: "", ru: 1},
-//     { name: "", type: "blank", id: 25, number: "", ru: 1},
-//     { name: "", type: "blank", id: 26, number: "", ru: 1},
-//     { name: "", type: "blank", id: 27, number: "", ru: 1},
 //     { name: "", type: "blank", id: 28, number: "", ru: 1},
 //     { name: "Server", type: "server", id: 29, number: "#02", ru: 1},
-//     { name: "Server", type: "server", id: 30, number: "#03", ru: 1},
-//     { name: "Server", type: "server", id: 31, number: "#04", ru: 1},
-//     { name: "Server", type: "server", id: 32, number: "#05", ru: 1},
-//     { name: "Server", type: "server", id: 33, number: "#06", ru: 1},
-//     { name: "Server", type: "server", id: 34, number: "#07", ru: 1},
-//     { name: "", type: "blank", id: 35, number: "", ru: 1},
-//     { name: "", type: "blank", id: 36, number: "", ru: 1},
-//     { name: "", type: "blank", id: 37, number: "", ru: 1},
 //     { name: "Storage", type: "storage", id: 38,number: "#01", ru: 2},
 // ];
 
@@ -72,6 +46,7 @@ router.post('/', function (req, res, next){
     user_req = req.body;
 
     getServiceSwitchInfo().then(function () {
+        console.log()
         return getMgmtSwitchInfo();
     }).then(function () {
         return getServerInfo();
@@ -194,11 +169,6 @@ function getServerInfo() {
                             json['number'] = "#" + (i).toString();
                         }
                         items.push(json);
-
-                        let blank_json = { name: "", type: "blank", id: 0, number: "", ru: 1};
-                        blank_json["id"] = count++;
-                        count_ru += 1;
-                        items.push(blank_json);
                     }
                     resolve();
                 }

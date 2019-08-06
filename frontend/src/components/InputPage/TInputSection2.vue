@@ -92,15 +92,15 @@
             </div>
 
             <div class="spec-contents" v-else-if="specData.title === 'DISK'">
-                <p style="font-size: 15px; text-align: center">기본값을 사용합니다</p>
+                <!--<p style="font-size: 15px; text-align: center">기본값을 사용합니다</p>-->
                 <label style="font-size: 14px; font-weight: bold; padding-left: 10px"> DISK 선택
-                    <select class="type-dropdown">
-                        <option>HPE 1.2TB SAS 10K SFF SC DS HDD</option>
+                    <select class="type-dropdown" v-model="diskId">
+                        <option v-for="item in diskData" :value="item.partnum">{{item.name}}</option>
                     </select>
                 </label>
                 <br>
                 <br>
-                <label style="font-size: 14px; font-weight: bold; padding-left: 10px">수량 <input type="number" value="12"></label>
+                <label style="font-size: 14px; font-weight: bold; padding-left: 10px">수량 <input type="number" value="12" v-model.number="diskCount"></label>
             </div>
             <div class="spec-contents" v-else-if="specData.title === 'NIC'">
                 <p style="font-size: 15px; text-align: center">기본값을 사용합니다</p>
@@ -154,6 +154,7 @@ export default {
                 tableHeaders: [],
                 tableItems: [ ]
             },
+            diskData: [],
             memVolums: [384,768,192,512,256],
             memTarget: 384,
             serverId: '',
@@ -201,10 +202,10 @@ export default {
             this.$store.commit('app/memoryCount', this.memoryCount);
         },
         diskId: function () {
-            this.$store.commit('app/memoryCount', this.memoryCount);
+            this.$store.commit('app/diskId', this.diskId);
         },
         diskCount: function () {
-            this.$store.commit('app/memoryCount', this.memoryCount);
+            this.$store.commit('app/diskCount', this.diskCount);
         },
     },
     methods: {
@@ -254,6 +255,12 @@ export default {
                 .then(response => {
                     this.specData.tableHeaders = ['','벤더','부품 정보','RU','CPU 개수', '수량'];
                     this.specData.tableItems = response.data.data;
+                });
+        },
+        getDiskData: function() {
+            this.$http.get('http://localhost:3000/v1/disk')
+                .then(response => {
+                    this.diskData = response.data.data;
                 });
         },
         isMaxValue(value) {
@@ -320,6 +327,7 @@ export default {
             } else if(event.currentTarget.id === 'disk'){
                 this.specData.title = 'DISK';
                 this.diskStyle = this.selectedStyle;
+                this.getDiskData();
             } else if(event.currentTarget.id === 'nic'){
                 this.specData.title = 'NIC';
                 this.nicStyle = this.selectedStyle;

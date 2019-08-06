@@ -53,25 +53,6 @@ export default {
     name: "TResultSection2",
     components: { VueGoodTable },
     created: function() {
-        // TODO : Please delete this code! just for test
-        // this.$store.commit('app/serviceSwitchCount', 2);
-        // this.$store.commit('app/serviceSwitchId', 'DCS-7050SX3-48YC12-F');
-        //
-        // this.$store.commit('app/mgmtSwitchCount', 2);
-        // this.$store.commit('app/mgmtSwitchId', 'DCS-7280TR-48C6-F');
-        //
-        // this.$store.commit('app/storageCount', 1);
-        // this.$store.commi\t('app/storageId', 'storage-1234');
-        //
-        // this.$store.commit('app/serverCount', 2);
-        // this.$store.commit('app/serverId', '867959-B21');
-        //
-        // this.$store.commit('app/cpuCount', 4);
-        // this.$store.commit('app/cpuId', '826878-B21');
-        //
-        // this.$store.commit('app/memoryCount', 24);
-        // this.$store.commit('app/memoryId', '815100-B21');
-
         this.getServerRows();
     },
     methods: {

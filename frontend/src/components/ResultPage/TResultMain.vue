@@ -26,7 +26,7 @@ export default {
         this.$store.commit('app/serverCount', 12);
         this.$store.commit('app/serverId', '867959-B21');
 
-        this.$store.commit('app/cpuCount', 48);
+        this.$store.commit('app/cpuCount', 24);
         this.$store.commit('app/cpuId', '826878-B21');
 
         this.$store.commit('app/memoryCount', 144);

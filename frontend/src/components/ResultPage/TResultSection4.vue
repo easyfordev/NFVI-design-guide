@@ -106,23 +106,24 @@
             </div>
             <div class="server-switch">
                 <!--SFP-->
-                <span class="port-item" style="position: absolute; z-index: 2; bottom: 150px; left: 50px; background-color: yellowgreen" > </span>
-                <span class="port-item" style="position: absolute; z-index: 2; bottom: 150px; left: 100px; background-color: yellowgreen"> </span>
+                <span class="port-item" style="position: absolute; z-index: 2; bottom: 150px; left: 50px; background-color: yellow" > </span>
+                <span class="port-item" style="position: absolute; z-index: 2; bottom: 150px; left: 100px; background-color: yellow"> </span>
                 <span class="port-item" style="position: absolute; z-index: 2; bottom: 150px; left: 150px"> </span>
                 <span class="port-item" style="position: absolute; z-index: 2; bottom: 150px; left: 200px"> </span>
 
                 <!--UTP-->
-                <span class="port-item" style="position: absolute; z-index: 2; bottom: 150px; left: 300px"> </span>
-                <span class="port-item" style="position: absolute; z-index: 2; bottom: 150px; left: 350px"> </span>
+                <span class="port-item" style="position: absolute; z-index: 2; bottom: 150px; left: 300px; background-color: lightgray"> </span>
+                <span class="port-item" style="position: absolute; z-index: 2; bottom: 150px; left: 350px; background-color: lightgray"> </span>
 
                 <!--SFP-->
-                <span class="port-item" style="position: absolute; z-index: 2; bottom: 150px; left: 450px"> </span>
-                <span class="port-item" style="position: absolute; z-index: 2; bottom: 150px; left: 500px"> </span>
+                <span class="port-item" style="position: absolute; z-index: 2; bottom: 150px; left: 450px; background-color: yellow"> </span>
+                <span class="port-item" style="position: absolute; z-index: 2; bottom: 150px; left: 500px; background-color: yellow"> </span>
 
                 <!--UTP-->
                 <span class="port-item" style="position: absolute; z-index: 2; bottom: 110px; left: 70px; background-color: lightgray"> </span>
-                <span class="port-item" style="position: absolute; z-index: 2; bottom: 110px; left: 120px"> </span>
+                <span class="port-item" style="position: absolute; z-index: 2; bottom: 110px; left: 120px; background-color: lightgray"> </span>
             </div>
+            <br>
             <img src="../../assets/server-1U-back.png" width="900px" height="150px" style="position: absolute; left: 10px"/>
             <img src="../../assets/nic-guide.png" width="100px" style="position: absolute; right: 10px; bottom: 100px"/>
         </div>
@@ -141,24 +142,24 @@ export default {
             dragging: false,
             titles: [ "Service Switch #01","Service Switch #02","MGMT Switch #01","MGMT Switch #02" ],
             items1: [
-                { name: "CU", type: "service", id: "01", giga: 25 },
-                { name: "CU", type: "service", id: "02", giga: 25 },
-                { name: "CU", type: "service", id: "03", giga: 25 },
-                { name: "CU", type: "service", id: "04", giga: 25 },
-                { name: "CU", type: "service", id: "05", giga: 25 },
-                { name: "CU", type: "service", id: "06", giga: 25 },
-                { name: "CU", type: "service", id: "07", giga: 25 },
-                { name: "CU", type: "service", id: "08", giga: 25 },
-                { name: "CU", type: "service", id: "09", giga: 25 },
-                { name: "CU", type: "service", id: "10", giga: 25 },
-                { name: "CU", type: "service", id: "11", giga: 25 },
-                { name: "CU", type: "service", id: "12", giga: 25 },
-                { name: "CU", type: "service", id: "13", giga: 25 },
-                { name: "CU", type: "service", id: "14", giga: 25 },
-                { name: "CU", type: "service", id: "15", giga: 25 },
-                { name: "CU", type: "service", id: "16", giga: 25 },
-                { name: "CU", type: "service", id: "17", giga: 25 },
-                { name: "CU", type: "service", id: "18", giga: 25 },
+                { name: "AMF", type: "service", id: "01", giga: 10 },
+                { name: "AMF", type: "service", id: "02", giga: 10 },
+                { name: "AMF", type: "service", id: "03", giga: 10 },
+                { name: "AMF", type: "service", id: "04", giga: 10 },
+                { name: "AMF", type: "service", id: "05", giga: 10 },
+                { name: "AMF", type: "service", id: "06", giga: 10 },
+                { name: "AMF", type: "service", id: "07", giga: 10 },
+                { name: "AMF", type: "service", id: "08", giga: 10 },
+                { name: "AMF", type: "service", id: "09", giga: 10 },
+                { name: "AMF", type: "service", id: "10", giga: 10 },
+                { name: "AMF", type: "service", id: "11", giga: 10 },
+                { name: "AMF", type: "service", id: "12", giga: 10 },
+                { name: "", type: "blank", id: 0, giga: 0 },
+                { name: "", type: "blank", id: 0, giga: 0 },
+                { name: "", type: "blank", id: 0, giga: 0 },
+                { name: "", type: "blank", id: 0, giga: 0 },
+                { name: "", type: "blank", id: 0, giga: 0 },
+                { name: "", type: "blank", id: 0, giga: 0 },
                 { name: "", type: "blank", id: 0, giga: 0 },
                 { name: "", type: "blank", id: 0, giga: 0 },
                 { name: "", type: "blank", id: 0, giga: 0 },
@@ -168,15 +169,12 @@ export default {
             ],
             items2: [
                 [
-                    { name: "CU", type: "mgmt", id: "01", giga: 25 },
-                    { name: "CU", type: "mgmt", id: "03", giga: 25 },
-                    { name: "CU", type: "mgmt", id: "05", giga: 25 },
-                    { name: "CU", type: "mgmt", id: "07", giga: 25 },
-                    { name: "CU", type: "mgmt", id: "09", giga: 25 },
-                    { name: "CU", type: "mgmt", id: "11", giga: 25 },
-                    { name: "CU", type: "mgmt", id: "13", giga: 25 },
-                    { name: "CU", type: "mgmt", id: "15", giga: 25 },
-                    { name: "CU", type: "mgmt", id: "17", giga: 25 },
+                    { name: "AMF", type: "mgmt", id: "01", giga: 10 },
+                    { name: "AMF", type: "mgmt", id: "03", giga: 10 },
+                    { name: "AMF", type: "mgmt", id: "05", giga: 10 },
+                    { name: "AMF", type: "mgmt", id: "07", giga: 10 },
+                    { name: "AMF", type: "mgmt", id: "09", giga: 10 },
+                    { name: "AMF", type: "mgmt", id: "11", giga: 10 },
                     { name: "", type: "blank", id: 0, giga: 0 },
                     { name: "", type: "blank", id: 0, giga: 0 },
                     { name: "", type: "blank", id: 0, giga: 0 },
@@ -187,22 +185,22 @@ export default {
                     { name: "", type: "blank", id: 0, giga: 0 },
                     { name: "", type: "blank", id: 0, giga: 0 },
                     { name: "", type: "blank", id: 0, giga: 0 },
-                    { name: "CU", type: "ILO", id: "01", giga: 0 },
-                    { name: "CU", type: "ILO", id: "03", giga: 0 },
-                    { name: "CU", type: "ILO", id: "05", giga: 0 },
-                    { name: "CU", type: "ILO", id: "07", giga: 0 },
-                    { name: "CU", type: "ILO", id: "09", giga: 0 },
+                    { name: "", type: "blank", id: 0, giga: 0 },
+                    { name: "", type: "blank", id: 0, giga: 0 },
+                    { name: "AMF", type: "ILO", id: "01", giga: 0 },
+                    { name: "AMF", type: "ILO", id: "03", giga: 0 },
+                    { name: "AMF", type: "ILO", id: "05", giga: 0 },
+                    { name: "AMF", type: "ILO", id: "07", giga: 0 },
+                    { name: "AMF", type: "ILO", id: "09", giga: 0 },
+                    { name: "AMF", type: "ILO", id: "11", giga: 0 },
                 ],
                 [
-                    { name: "CU", type: "mgmt", id: "02", giga: 25 },
-                    { name: "CU", type: "mgmt", id: "04", giga: 25 },
-                    { name: "CU", type: "mgmt", id: "06", giga: 25 },
-                    { name: "CU", type: "mgmt", id: "08", giga: 25 },
-                    { name: "CU", type: "mgmt", id: "10", giga: 25 },
-                    { name: "CU", type: "mgmt", id: "12", giga: 25 },
-                    { name: "CU", type: "mgmt", id: "14", giga: 25 },
-                    { name: "CU", type: "mgmt", id: "16", giga: 25 },
-                    { name: "CU", type: "mgmt", id: "18", giga: 25 },
+                    { name: "AMF", type: "mgmt", id: "02", giga: 25 },
+                    { name: "AMF", type: "mgmt", id: "04", giga: 25 },
+                    { name: "AMF", type: "mgmt", id: "06", giga: 25 },
+                    { name: "AMF", type: "mgmt", id: "08", giga: 25 },
+                    { name: "AMF", type: "mgmt", id: "10", giga: 25 },
+                    { name: "AMF", type: "mgmt", id: "12", giga: 25 },
                     { name: "", type: "blank", id: 0, giga: 0 },
                     { name: "", type: "blank", id: 0, giga: 0 },
                     { name: "", type: "blank", id: 0, giga: 0 },
@@ -214,23 +212,23 @@ export default {
                     { name: "", type: "blank", id: 0, giga: 0 },
                     { name: "", type: "blank", id: 0, giga: 0 },
                     { name: "", type: "blank", id: 0, giga: 0 },
-                    { name: "CU", type: "ILO", id: "04", giga: 0 },
-                    { name: "CU", type: "ILO", id: "02", giga: 0 },
-                    { name: "CU", type: "ILO", id: "06", giga: 0 },
-                    { name: "CU", type: "ILO", id: "08", giga: 0 },
+                    { name: "", type: "blank", id: 0, giga: 0 },
+                    { name: "AMF", type: "ILO", id: "04", giga: 0 },
+                    { name: "AMF", type: "ILO", id: "02", giga: 0 },
+                    { name: "AMF", type: "ILO", id: "06", giga: 0 },
+                    { name: "AMF", type: "ILO", id: "08", giga: 0 },
+                    { name: "AMF", type: "ILO", id: "10", giga: 0 },
+                    { name: "AMF", type: "ILO", id: "12", giga: 0 },
                 ]
             ],
             items3: [
                 [
-                    { name: "CU", type: "mgmt", id: "01", giga: 25 },
-                    { name: "CU", type: "mgmt", id: "03", giga: 25 },
-                    { name: "CU", type: "mgmt", id: "05", giga: 25 },
-                    { name: "CU", type: "mgmt", id: "07", giga: 25 },
-                    { name: "CU", type: "mgmt", id: "09", giga: 25 },
-                    { name: "CU", type: "mgmt", id: "11", giga: 25 },
-                    { name: "CU", type: "mgmt", id: "13", giga: 25 },
-                    { name: "CU", type: "mgmt", id: "15", giga: 25 },
-                    { name: "CU", type: "mgmt", id: "17", giga: 25 },
+                    { name: "AMF", type: "mgmt", id: "01", giga: 10 },
+                    { name: "AMF", type: "mgmt", id: "03", giga: 10 },
+                    { name: "AMF", type: "mgmt", id: "05", giga: 10 },
+                    { name: "AMF", type: "mgmt", id: "07", giga: 10 },
+                    { name: "AMF", type: "mgmt", id: "09", giga: 10 },
+                    { name: "AMF", type: "mgmt", id: "11", giga: 10 },
                     { name: "", type: "blank", id: 0, giga: 0 },
                     { name: "", type: "blank", id: 0, giga: 0 },
                     { name: "", type: "blank", id: 0, giga: 0 },
@@ -241,22 +239,22 @@ export default {
                     { name: "", type: "blank", id: 0, giga: 0 },
                     { name: "", type: "blank", id: 0, giga: 0 },
                     { name: "", type: "blank", id: 0, giga: 0 },
-                    { name: "CU", type: "ILO", id: "10", giga: 0 },
-                    { name: "CU", type: "ILO", id: "11", giga: 0 },
-                    { name: "CU", type: "ILO", id: "12", giga: 0 },
-                    { name: "CU", type: "ILO", id: "13", giga: 0 },
-                    { name: "CU", type: "ILO", id: "14", giga: 0 },
+                    { name: "", type: "blank", id: 0, giga: 0 },
+                    { name: "", type: "blank", id: 0, giga: 0 },
+                    { name: "", type: "blank", id: 0, giga: 0 },
+                    { name: "", type: "blank", id: 0, giga: 0 },
+                    { name: "", type: "blank", id: 0, giga: 0 },
+                    { name: "", type: "blank", id: 0, giga: 0 },
+                    { name: "", type: "blank", id: 0, giga: 0 },
+                    { name: "", type: "blank", id: 0, giga: 0 },
                 ],
                 [
-                    { name: "CU", type: "mgmt", id: "02", giga: 25 },
-                    { name: "CU", type: "mgmt", id: "04", giga: 25 },
-                    { name: "CU", type: "mgmt", id: "06", giga: 25 },
-                    { name: "CU", type: "mgmt", id: "08", giga: 25 },
-                    { name: "CU", type: "mgmt", id: "10", giga: 25 },
-                    { name: "CU", type: "mgmt", id: "12", giga: 25 },
-                    { name: "CU", type: "mgmt", id: "14", giga: 25 },
-                    { name: "CU", type: "mgmt", id: "16", giga: 25 },
-                    { name: "CU", type: "mgmt", id: "18", giga: 25 },
+                    { name: "AMF", type: "mgmt", id: "02", giga: 25 },
+                    { name: "AMF", type: "mgmt", id: "04", giga: 25 },
+                    { name: "AMF", type: "mgmt", id: "06", giga: 25 },
+                    { name: "AMF", type: "mgmt", id: "08", giga: 25 },
+                    { name: "AMF", type: "mgmt", id: "10", giga: 25 },
+                    { name: "AMF", type: "mgmt", id: "12", giga: 25 },
                     { name: "", type: "blank", id: 0, giga: 0 },
                     { name: "", type: "blank", id: 0, giga: 0 },
                     { name: "", type: "blank", id: 0, giga: 0 },
@@ -268,10 +266,13 @@ export default {
                     { name: "", type: "blank", id: 0, giga: 0 },
                     { name: "", type: "blank", id: 0, giga: 0 },
                     { name: "", type: "blank", id: 0, giga: 0 },
-                    { name: "CU", type: "ILO", id: "15", giga: 0 },
-                    { name: "CU", type: "ILO", id: "16", giga: 0 },
-                    { name: "CU", type: "ILO", id: "17", giga: 0 },
-                    { name: "CU", type: "ILO", id: "18", giga: 0 },
+                    { name: "", type: "blank", id: 0, giga: 0 },
+                    { name: "", type: "blank", id: 0, giga: 0 },
+                    { name: "", type: "blank", id: 0, giga: 0 },
+                    { name: "", type: "blank", id: 0, giga: 0 },
+                    { name: "", type: "blank", id: 0, giga: 0 },
+                    { name: "", type: "blank", id: 0, giga: 0 },
+                    { name: "", type: "blank", id: 0, giga: 0 },
                 ]
             ],
             // list1: [

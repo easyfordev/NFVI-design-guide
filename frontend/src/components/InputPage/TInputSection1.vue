@@ -9,16 +9,12 @@
             <label>
                 Workload 선택
                 <!--TODO : 제대로 다시해야 함 ...-->
-                <select style="margin-right: 10px" class="type-dropdown">
+                <select style="margin-right: 10px" class="type-dropdown" v-model="workloadType">
                     <option>Signaling</option>
                     <option>User Plain</option>
                     <option>ETC</option>
                 </select>
-                <select class="type-dropdown">
-                    <option></option>
-                    <option>CMS</option>
-                    <option>+ 새로운 Workload 추가하기</option>
-                </select>
+                <input type="text" v-model="workloadName" style="width: 100px"/>
             </label>
         </div>
     </div>
@@ -26,7 +22,21 @@
 
 <script>
 export default {
-    name: "TInputSection1"
+    name: "TInputSection1",
+    data: function () {
+        return{
+            workloadType: '',
+            workloadName: ''
+        }
+    },
+    watch: {
+        workloadType: function () {
+            this.$store.commit('app/workloadType', this.workloadType);
+        },
+        workloadName: function () {
+            this.$store.commit('app/workloadName', this.workloadName);
+        },
+    }
 }
 </script>
 

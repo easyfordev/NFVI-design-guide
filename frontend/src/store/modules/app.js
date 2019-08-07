@@ -1,6 +1,8 @@
 /* eslint-disable */
 
 const state = {
+    workloadType: '',
+    workloadName: '',
     serverId: '',
     serverCount: 0,
     cpuId: '',
@@ -24,6 +26,12 @@ const getters  = {
 };
 
 const mutations = {
+    workloadName ( state, payload )  {
+        state.workloadName  = payload
+    },
+    workloadType ( state, payload )  {
+        state.workloadType  = payload
+    },
     serverId ( state, payload )  {
         state.serverId  = payload
     },

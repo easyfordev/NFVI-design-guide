@@ -131,7 +131,24 @@
                 </table>
             </div>
             <div class="spec-contents" v-else-if="specData.title === 'Switch'">
-                <p style="font-size: 15px; text-align: center">This is Switch!</p>
+                <p>서버 1대당</p>
+                <label>서비스 포트
+                    <label>
+                        <select>
+                            <option value="10">10</option>
+                            <option value="25">25</option>
+                        </select>
+                        G
+                    </label>
+                    X <input type="number" style="width: 50px"/>ports</label><br>
+                <label>관리 포트
+                    <label>
+                        <select>
+                            <option value="10">10</option>
+                        </select>
+                        G
+                    </label>
+                    X <input type="number" style="width: 50px"/>ports</label><br>
             </div>
 
         </div>

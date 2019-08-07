@@ -20,6 +20,7 @@
                 <tr v-for="item in items" :key="item.key">
                     <td style=""><img border="0" width="150px" :src="getImgSrc(item.type, item.ru)" :height="getImgHeight(item.ru)"/></td>
                     <td :height="getItemHeight(item.ru)" :style="getItemStyle(item.type)" rowspan="2">
+                        <span v-if="item.type === 'server'">{{workloadName}}</span>
                         {{ item.name }} {{item.number}}
                     </td>
                 </tr>
@@ -48,13 +49,15 @@ export default {
             myStyle: '',
             enabled: true,
             items: [],
-            dragging: false
+            dragging: false,
+            workloadName: ''
         }
     },
     created: function() {
         this.pageTitle = 'Rack 구성도';
 
         this.getItemList();
+        this.workloadName = this.$store.state.app.workloadName;
         // console.log(">>>" + this.$store.state.app.mgmtSwitchCount);
         // console.log(">>>" + this.$store.state.app.storageCount);
         // console.log(">>>" + this.$store.state.app.serviceSwitchCount);

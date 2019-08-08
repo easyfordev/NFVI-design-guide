@@ -11,7 +11,7 @@
                     :groupOptions="{ enabled: true }"
             >
                 <div slot="table-actions-bottom">
-                    <p style="text-align: right; padding-right: 20px; font-weight: bolder">총 {{ commafy(totalSum) }} 원</p>
+                    <p style="text-align: right; padding-right: 20px; font-weight: bolder">서버 1대 당 {{ commafy(totalSum) }} 원 X  {{serverCount}}대 =  <span style="color: darkred">총 {{ commafy((totalSum*serverCount).toFixed(3))}} 원</span></p>
                 </div>
                 <template slot="table-header-row" slot-scope="props">
                     <span style="font-weight: bold; color: darkred;font-size: 13px">
@@ -39,21 +39,23 @@
                 </template>
             </vue-good-table>
         </div>
-
         <!--<p class="mid-title" style="position: absolute; top: 55%;width: 100%;height: 5%">전력 소모량 계산기</p>-->
         <!--<div class="power-estimation">-->
         <!--</div>-->
+        <t-result-section3></t-result-section3>
     </div>
 </template>
 
 <script>
 import { VueGoodTable } from 'vue-good-table'
+import TResultSection3 from './TResultSection3'
 
 export default {
     name: "TResultSection2",
-    components: { VueGoodTable },
+    components: { VueGoodTable, TResultSection3 },
     created: function() {
         this.getServerRows();
+        this.serverCount = this.$store.state.app.serverCount;
     },
     methods: {
         getServerRows() {
@@ -100,7 +102,8 @@ export default {
                 //     ]
                 // }
             ],
-            totalSum: 0
+            totalSum: 0,
+            serverCount: 0
         };
     }
 }
@@ -124,7 +127,7 @@ export default {
     left: 2%;
     width: 96%;
     height: 90%;
-    background-color: #f4f6f6;
+    /*background-color: #f4f6f6;*/
 }
 .power-estimation {
     position: absolute;

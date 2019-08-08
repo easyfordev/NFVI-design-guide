@@ -5,11 +5,11 @@
         <div class="hw-selector">
             <div class="category" @click="toggleServer()" style="width: 100%;">서버<img class="arrow" :src="arrowServerImg"></div>
             <div class="categories-server" v-if="toggleCatServer">
-                <p class="items" id="server" @click="categorySelected($event)" :style="serverStyle">Server</p>
                 <p class="items" id="cpu" @click="categorySelected($event)" :style="cpuStyle">CPU</p>
                 <p class="items" id="memory" @click="categorySelected($event)" :style="memoryStyle">Memory</p>
                 <p class="items" id="disk" @click="categorySelected($event)" :style="diskStyle">DISK</p>
                 <p class="items" id="nic" @click="categorySelected($event)" :style="nicStyle">NIC</p>
+                <p class="items" id="server" @click="categorySelected($event)" :style="serverStyle">Server</p>
             </div>
             <div class="category" @click="toggleSwitch()" style="width: 100%;">네트워크 스위치<img class="arrow" :src="arrowSwitchImg"></div>
             <div class="categories-server" v-if="toggleCatSwitch">

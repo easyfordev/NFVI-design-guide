@@ -11,7 +11,7 @@
                     :groupOptions="{ enabled: true }"
             >
                 <div slot="table-actions-bottom">
-                    <p style="text-align: right; padding-right: 20px; font-weight: bolder">{{commafy(totalSum)}}W X {{serverCount}}대 = <span style="color: darkred">총 {{ (totalSum*serverCount).toFixed(3)}} W</span></p>
+                    <p style="text-align: right; padding-right: 20px; font-weight: bolder">서버 1대 당 {{commafy(totalSum)}}W X {{serverCount}}대 = <span style="color: darkred">총 {{ (totalSum*serverCount).toFixed(3)}} W</span></p>
                 </div>
                 <template slot="table-header-row" slot-scope="props">
                     <span style="font-weight: bold; color: darkred;font-size: 13px">
@@ -108,11 +108,18 @@
 </script>
 
 <style scoped>
+    /*.t-result-section3{*/
+        /*position: absolute;*/
+        /*height: 100%;*/
+        /*right: 0;*/
+        /*width: 60%;*/
+    /*}*/
     .t-result-section3{
         position: absolute;
+        top: 40%;
         height: 100%;
-        right: 0;
-        width: 60%;
+        left: 0;
+        width: 100%;
     }
     .mid-title {
         font-weight: 700;
@@ -125,7 +132,7 @@
         left: 2%;
         width: 96%;
         height: 90%;
-        background-color: #f4f6f6;
+        /*background-color: #f4f6f6;*/
     }
     .power-estimation {
         position: absolute;

@@ -29,9 +29,9 @@
             </draggable>
         </div>
         <img class="rack-chassis" src="../../assets/rack.png"/>
-        <button style="position: absolute; left: 650px" @click="onClickMenu1">비용</button>
-        <button style="position: absolute; left: 650px; top: 150px" @click="onClickMenu2">전력</button>
-        <button style="position: absolute; left: 650px; top: 200px" @click="onClickMenu3">네트워크</button>
+        <button class="menu-button" style="position: absolute; left: 650px" @click="onClickMenu1">견적 산출</button>
+        <!--<button style="position: absolute; left: 650px; top: 150px" @click="onClickMenu2">전력</button>-->
+        <button class="menu-button" style="position: absolute; left: 650px; top: 200px" @click="onClickMenu3">네트워크 구성도</button>
     </div>
 </template>
 
@@ -215,5 +215,14 @@ export default {
     margin-left: 92px;
     height: 925px;
     width: 180px;
+}
+.menu-button{
+    width: 120px;
+    height: 43px;
+    /*border-radius: 20px;*/
+    box-shadow: 0 2px 4px 0 #c6d5e9;
+    background-color: #1c1f28;
+    color: white;
+    font-size: 13px;
 }
 </style>

@@ -139,10 +139,11 @@ export default {
     data: function() {
         return {
             enabled: true,
+            workloadName: this.$store.state.app.workloadName,
             dragging: false,
             titles: [ "Service Switch #01","Service Switch #02","MGMT Switch #01","MGMT Switch #02" ],
             items1: [
-                { name: "AMF", type: "service", id: "01", giga: 10 },
+                { name: "AMF" , type: "service", id: "01", giga: 10 },
                 { name: "AMF", type: "service", id: "02", giga: 10 },
                 { name: "AMF", type: "service", id: "03", giga: 10 },
                 { name: "AMF", type: "service", id: "04", giga: 10 },
@@ -275,21 +276,11 @@ export default {
                     { name: "", type: "blank", id: 0, giga: 0 },
                 ]
             ],
-            // list1: [
-            //     { name: "John", id: 1 },
-            //     { name: "Joao", id: 2 },
-            //     { name: "Jean", id: 3 },
-            //     { name: "Gerard", id: 4 }
-            // ],
-            // list2: [
-            //     { name: "Juan", id: 5 },
-            //     { name: "Edgard", id: 6 },
-            //     { name: "Johnson", id: 7 }
-            // ]
         }
     },
     created: function(){
-        // console.log(this.$store.state.app);
+        // console.log(this.$store.state.app.workloadName);
+
     },
     methods: {
         displayNumber(num){

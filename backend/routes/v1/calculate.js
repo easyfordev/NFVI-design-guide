@@ -42,8 +42,8 @@ router.post('/', function (req, res, next){
         return getCpuInfo();
     }).then(function () {
         return getMemoryInfo();
-    // }).then(function () {
-    //     return getStorageInfo();
+    }).then(function () {
+        return getDiskInfo();
     // }).then(function () {
     //     return setDefaultItems();
     // }).then(function () {
@@ -57,7 +57,31 @@ router.post('/', function (req, res, next){
     });
     data = {mode: "span", label: "서버", children: []};
 });
-
+function getDiskInfo() {
+    return new Promise(function(resolve, reject){
+        //         { name: "DISK", spec: "HPE 1.2TB SAS 10K SFF SC DS HDD", count: 12, perCost: "417,000원", price: "5,004,000원" },
+        conn.query('SELECT * FROM nfvi.disk where partnum=?', user_req.diskId,
+            function (error, result) {
+                if(error) {
+                    res.status(400).send({
+                        status: "fail",
+                        msg: error
+                    });
+                }
+                else {
+                    let json = {};
+                    json["name"] = "DISK";
+                    json["spec"] = result[0].name;
+                    json["count"] = user_req.diskCount;
+                    json["perCost"] = result[0].price;
+                    json["price"] = user_req.diskCount * result[0].price;
+                    sum += json["price"];
+                    data["children"].push(json);
+                    resolve();
+                }
+            });
+    });
+}
 function getCpuInfo() {
     return new Promise(function(resolve, reject){
         conn.query('SELECT * FROM nfvi.cpu where partnum=?', user_req.cpuId,
@@ -122,9 +146,9 @@ function getServerInfo() {
                     let json = {};
                     json["name"] = "Server";
                     json["spec"] = result[0].name;
-                    json["count"] = user_req.serverCount;
+                    json["count"] = 1;
                     json["perCost"] = result[0].price;
-                    json["price"] = user_req.serverCount * result[0].price;
+                    json["price"] = result[0].price;
                     sum += json["price"];
 
                     data["children"].push(json);

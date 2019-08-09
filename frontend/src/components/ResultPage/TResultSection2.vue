@@ -5,13 +5,13 @@
             <vue-good-table
                     :columns="columns"
                     :rows="rows"
-                    max-height="900px"
+                    max-height="400px"
                     :fixed-header="true"
                     :line-numbers="true"
                     :groupOptions="{ enabled: true }"
             >
                 <div slot="table-actions-bottom">
-                    <p style="text-align: right; padding-right: 20px; font-weight: bolder">서버 1대 당 {{ commafy(totalSum) }} 원 X  {{serverCount}}대 =  <span style="color: darkred">총 {{ commafy((totalSum*serverCount).toFixed(3))}} 원</span></p>
+                    <p style="text-align: right; padding-right: 20px; font-weight: bolder">서버 1대 당 {{ commafy(totalSum) }} 원 X  {{serverCount}}대 =  <span style="color: darkred">총 {{ commafy((totalSum*serverCount)) }} 원</span></p>
                 </div>
                 <template slot="table-header-row" slot-scope="props">
                     <span style="font-weight: bold; color: darkred;font-size: 13px">
@@ -66,7 +66,30 @@ export default {
                     let json = response.data.rows;
                     this.rows.push(json);
                     this.totalSum = response.data.sum;
+
+                    let temp = {
+                        mode: "span", // span means this header will span all columns
+                        label: "스위치", // this is the label that'll be used for the header
+                        children: [
+                            { name: "Service-10G", spec: "DCS-7050SX3-48YC12-F", count: 2, perCost: 12598000, price: 25196000  },
+                            { name: "MGMT-10G", spec: "DCS-7280TR-48C6-F", count: 2, perCost: 7402000, price: 14804000 },
+                        ]
+                    };
+                    let temp2 = {
+                        mode: "span", // span means this header will span all columns
+                        label: "기타 장비", // this is the label that'll be used for the header
+                        children: [
+                            { name: "KVM/Console", spec: "HP LCD 8500 1U Console INTL Kit", count: 1, perCost: 624000, price: 624000  },
+                            { name: "KVM/Console", spec: "HP0x1x16 G3 KVM Console Switch", count: 1, perCost: 550000, price: 550000 },
+                            { name: "KVM/Console", spec: "HP0x1x16 G3 KVM Console Switch", count: 2, perCost: 29000, price: 58000 },
+                        ]
+                    };
+                    this.rows.push(temp);
+                    this.rows.push(temp2);
+
+
                 });
+
         },
         commafy(num){
             var str = num.toString().split('.');
@@ -103,6 +126,7 @@ export default {
                 // }
             ],
             totalSum: 0,
+            tempRemain: 0,
             serverCount: 0
         };
     }

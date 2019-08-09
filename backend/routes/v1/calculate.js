@@ -2,20 +2,20 @@ var express = require('express');
 var router = express.Router();
 var mysql = require('mysql');
 
-var conn = mysql.createConnection({
-    host: '172.27.19.33',
-    port: '3306',
-    user: 'pcl_admin',
-    password: 'Pcl.237790*',
-    database: 'nfvi'
-});
 // var conn = mysql.createConnection({
-//     host: 'localhost',
+//     host: '172.27.19.33',
 //     port: '3306',
-//     user: 'root',
-//     password: 'easy88ch',
+//     user: 'pcl_admin',
+//     password: 'Pcl.237790*',
 //     database: 'nfvi'
 // });
+var conn = mysql.createConnection({
+    host: 'localhost',
+    port: '3306',
+    user: 'root',
+    password: 'easy88ch',
+    database: 'nfvi'
+});
 conn.connect();
 
 var data = {mode: "span", label: "서버", children: []};
@@ -54,6 +54,7 @@ router.post('/', function (req, res, next){
             sum: sum
         });
         rows = [];
+        sum=0;
     });
     data = {mode: "span", label: "서버", children: []};
 });
@@ -77,6 +78,18 @@ function getDiskInfo() {
                     json["price"] = user_req.diskCount * result[0].price;
                     sum += json["price"];
                     data["children"].push(json);
+
+                    // TODO : Please delete this codes
+                    data["children"].push({ name: "NIC", spec: "HPE Eth 10Gb 2p 562FLR-T Adptr", count: 1, perCost: 313000, price: 313000 });
+                    data["children"].push({ name: "NIC", spec: "HPE Eth 10Gb 2p 562T Adptr", count: 1, perCost: 333000, price: 333000 });
+                    data["children"].push({ name: "NIC", spec: "HPE Eth 10Gb 4p 563SFP + Adptr", count: 1, perCost: 448000, price: 448000 });
+                    data["children"].push({ name: "NIC", spec: "HPE Ethernet 10Gb 2-port 562SFP + Adptr", count: 1, perCost: 287000, price: 287000 });
+
+                    sum += 313000;
+                    sum += 333000;
+                    sum += 448000;
+                    sum += 287000;
+
                     resolve();
                 }
             });

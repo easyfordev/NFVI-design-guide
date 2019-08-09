@@ -116,7 +116,7 @@
     /*}*/
     .t-result-section3{
         position: absolute;
-        top: 40%;
+        top: 55%;
         height: 100%;
         left: 0;
         width: 100%;

@@ -6,8 +6,9 @@ import TResultSection2 from '../components/ResultPage/TResultSection2'
 import TResultSection3 from '../components/ResultPage/TResultSection3'
 import TResultSection4 from '../components/ResultPage/TResultSection4'
 import TAdminMain from '../components/AdminPage/TAdminMain'
+import HistoryMain from '../components/HistoryPage/HistoryMain'
 
-Vue.use(Router)
+Vue.use(Router);
 
 export default new Router({
     routes: [
@@ -17,9 +18,10 @@ export default new Router({
             name: 'TInputMain'
         },
         {
-            path: '/result',
+            path: '/result/amf0011',
             component: TResultMain,
             name: 'TResultMain',
+            props: true,
             children: [
                 {
                     path: 'estimation',
@@ -46,6 +48,11 @@ export default new Router({
             component: TAdminMain,
             name: 'TAdminMain',
             props: true
+        },
+        {
+            path: '/history',
+            component: HistoryMain,
+            name: 'HistoryMain'
         }
     ]
 })

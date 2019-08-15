@@ -45,8 +45,8 @@ router.post('/', function (req, res, next){
         return getMemoryInfo();
     }).then(function () {
         return getDiskInfo();
-    // // }).then(function () {
-    // //     return getStorageInfo();
+    }).then(function () {
+        return getNicInfo();
     // // }).then(function () {
     // //     return setDefaultItems();
     // // }).then(function () {
@@ -61,6 +61,31 @@ router.post('/', function (req, res, next){
     data = {mode: "span", label: "서버", children: []};
     totalSum=0;
 });
+function getNicInfo() {
+    //             { name: "DISK", partnum: "872479-B21",spec: "HPE 1.2TB SAS 10K SFF SC DS HDD", power: 7.48, count: 12, totalPower: 88.8 },
+    let promises = [];
+    for (let i = 0; i < user_req.nicId.length; i++) {
+        if(user_req.nicStatus[i] === true){
+            promises.push(new Promise(function (resolve) {
+                conn.query('SELECT * FROM nfvi.nic where partnum=?', user_req.nicId[i],
+                    function (error, result) {
+                        data["children"].push({
+                            name: "NIC " + result[0].giga + "G " + result[0].type + " " + result[0].option + " " + result[0].ports + "포트",
+                            partnum: result[0].partnum,
+                            spec: result[0].name,
+                            power: result[0].power,
+                            count: user_req.nicCount[i],
+                            totalPower: user_req.nicCount[i] * result[0].power
+                        });
+                        totalSum += user_req.nicCount[i] * result[0].power;
+                        resolve();
+                    });
+            }));
+        }
+    }
+
+    return Promise.all(promises);
+}
 function getDiskInfo() {
     return new Promise(function(resolve, reject){
         conn.query('SELECT * FROM nfvi.disk where partnum=?', user_req.diskId,

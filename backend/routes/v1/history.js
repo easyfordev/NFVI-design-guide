@@ -1,0 +1,74 @@
+var express = require('express');
+var router = express.Router();
+var mysql = require('mysql');
+
+// var conn = mysql.createConnection({
+//     host: '172.27.19.33',
+//     port: '3306',
+//     user: 'pcl_admin',
+//     password: 'Pcl.237790*',
+//     database: 'nfvi'
+// });
+var conn = mysql.createConnection({
+    host: 'localhost',
+    port: '3306',
+    user: 'root',
+    password: 'easy88ch',
+    database: 'nfvi'
+});
+conn.connect();
+// let labels = [];
+let data = [];
+
+function getInfo() {
+    return new Promise(function(resolve, reject){
+        conn.query('SELECT * from history',
+            function (error, result) {
+                if(error) {
+                    res.status(400).send({
+                        status: "fail",
+                        msg: error
+                    });
+                }
+                else{
+                    result.forEach(function (item, index, array) {
+                        data.push(item);
+                    });
+                    resolve();
+                }
+            });
+    });
+}
+
+router.post('/insert', function (req, res, next){
+    console.log(req.body);
+
+    conn.query('insert into history(`hid`,`date`,`who`,`type`,`application`,`description`) values(?,?,?,?,?,?)',
+        [ req.body.hid, req.body["날짜"], req.body["담당자"], req.body.workloadType, req.body.workloadName, req.body["설명"] ],
+        function (error, result) {
+            if(error) {
+                // console.log(error);
+                res.status(404).send({
+                    msg: 'Type Error'
+                });
+            }
+            else {
+                res.status(200).send();
+            }
+        });
+    res.status(200).send();
+});
+
+router.get('/', function (req, res, next){
+    getInfo().then(function () {
+        res.status(200).send({
+            // labels: labels,
+            data: data
+        });
+        // labels = []
+        data = []
+    })
+
+});
+
+module.exports = router;

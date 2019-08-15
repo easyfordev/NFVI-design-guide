@@ -63,9 +63,8 @@
                         <td>{{item.volume}}</td>
                         <td style="width: 12%;">{{commafy(item.price)}}원</td>
                         <td style="width: 8%;">{{item.pcs}}개</td>
-                        <td style="font-weight: bold;color: #EA002C;text-align: center">{{item.score}}점</td>
+                        <td style="font-weight: bold;color: #EA002C;text-align: center">{{ getMemoryScore(item.pcs)}}점</td>
                         <td style="width: 12%;font-weight: bold;color: #EA002C;text-align: center">{{commafy(item.price * item.pcs)}}원</td>
-                        <td><span style="width: 8%; font-weight: bold;color: forestgreen;text-align: center">BEST!</span></td>
                         <td>
                             <input v-if="memoryId === item.partnum" type="number" style="width: 50px" v-model.number="memoryCount"/>
                             <input v-else type="number" style="width: 50px; text-align: center" disabled/>
@@ -83,6 +82,7 @@
                         <td style="width: 35%;height: 10%">{{item.name}}</td>
                         <td style="width: 10%;height: 10%">{{item.ru}}U</td>
                         <td style="width: 10%;height: 10%">{{item.numOfCpu}}개</td>
+                        <td style="width: 10%;height: 10%">{{commafy(item.price)}}원</td>
                         <td style="width: 10%;height: 10%">
                             <input v-if="serverId === item.partnum" type="number" style="width: 50px; text-align: center" v-model.number="serverCount"/>
                             <input v-else type="number" style="width: 50px; text-align: center" disabled/>
@@ -92,10 +92,9 @@
             </div>
 
             <div class="spec-contents" v-else-if="specData.title === 'DISK'">
-                <!--<p style="font-size: 15px; text-align: center">기본값을 사용합니다</p>-->
                 <label style="font-size: 14px; font-weight: bold; padding-left: 10px"> DISK 선택
                     <select class="type-dropdown" v-model="diskId">
-                        <option v-for="item in diskData" :value="item.partnum">{{item.name}}</option>
+                        <option v-for="item in diskData" :value="item.partnum" :key="item.key">{{item.name}}</option>
                     </select>
                 </label>
                 <br>
@@ -103,36 +102,25 @@
                 <label style="font-size: 14px; font-weight: bold; padding-left: 10px">수량 <input type="number" value="12" v-model.number="diskCount"></label>
             </div>
             <div class="spec-contents" v-else-if="specData.title === 'NIC'">
-                <p style="font-size: 15px; text-align: center">기본값을 사용합니다</p>
                 <table>
-                    <th></th>
-                    <th>용량</th>
-                    <th>타입</th>
-                    <th>부품 정보</th>
-                    <th>가격</th>
-                    <th>수량</th>
-
-                    <tr>
-                        <td><input type="checkbox"/></td>
-                        <td style="width: 10%">NIC_10G</td>
-                        <td style="width: 10%">UTP(FLR)</td>
-                        <td style="width: 40%">HPE Eth 10Gb 2p 562FLR-T Adptr</td>
-                        <td>313,000원</td>
-                        <td><input type="number" style="width: 30px"></td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox"/></td>
-                        <td style="width: 10%">NIC_10G</td>
-                        <td style="width: 10%">UTP</td>
-                        <td style="width: 40%">HPE Eth 10Gb 2p 562T Adptr</td>
-                        <td>333,000원</td>
-                        <td><input type="number" style="width: 30px" value="1"></td>
+                    <th v-for="hitem in specData.tableHeaders" :key="hitem.key">{{ hitem }}</th>
+                    <tr v-for="(item, index) in specData.tableItems" :key="item.key">
+                        <td style="width: 5%"><input type="checkbox" v-model="nicStatus[index]"></td>
+                        <td style="width: 10%;">{{item.giga}}G</td>
+                        <td style="width: 10%;">{{item.type}}</td>
+                        <td style="width: 10%;">{{item.option}}</td>
+                        <td style="width: 10%;">{{item.ports}}ports</td>
+                        <td style="width: 40%; height: 10%">{{item.name}}</td>
+                        <td style="width: 10%">{{commafy(item.price)}}원</td>
+                        <td style="width: 10%; text-align: center" >
+                            <input type="number" style="width: 50px; text-align: center" v-model.number="nicCount[index]"/>
+                        </td>
                     </tr>
                 </table>
             </div>
             <div class="spec-contents" v-else-if="specData.title === 'Switch'">
-                <p>서버 1대당</p>
-                <label>서비스 포트
+                <p style="font-size: 17px; font-weight: bolder; margin-left: 15px">서버 1대당</p>
+                <label style="font-size: 17px; font-weight: bolder; margin-left: 20px">서비스 포트
                     <label>
                         <select>
                             <option value="10">10</option>
@@ -141,7 +129,7 @@
                         G
                     </label>
                     X <input type="number" style="width: 50px"/>ports</label><br>
-                <label>관리 포트
+                <label style="font-size: 17px; font-weight: bolder; margin-left: 20px">관리 포트
                     <label>
                         <select>
                             <option value="10">10</option>
@@ -182,6 +170,10 @@ export default {
             memoryCount: 0,
             diskId: '',
             diskCount: 0,
+            nicId: [],
+            nicStatus: [],
+            nicCount: [],
+            tempValue: 0,
             selectedStyle: 'background-color: #FF7A00; color: white',
             normalStyle: 'background-color: #FFFFFF; color: black',
             serverStyle: this.normalStyle,
@@ -224,6 +216,15 @@ export default {
         diskCount: function () {
             this.$store.commit('app/diskCount', this.diskCount);
         },
+        nicId: function () {
+            this.$store.commit('app/nicId', this.nicId);
+        },
+        nicStatus: function () {
+            this.$store.commit('app/nicStatus', this.nicStatus);
+        },
+        nicCount: function () {
+            this.$store.commit('app/nicCount', this.nicCount);
+        }
     },
     methods: {
         toggleServer: function(){
@@ -262,16 +263,34 @@ export default {
                 params: { target: this.memTarget }
             })
                 .then(response => {
-                    console.log(response.data.data);
-                    this.specData.tableHeaders = ['','부품 정보', '속도', '개당 용량', '가격', '갯수','상대적 성능', '총 가격', '추천', '수량'];
+                    // console.log(response.data.data);
+                    this.specData.tableHeaders = ['','부품 정보', '속도', '개당 용량', '가격', '갯수','상대적 성능', '총 가격', '수량'];
                     this.specData.tableItems = response.data.data;
                 });
         },
         getServerData: function() {
             this.$http.get('http://localhost:3000/v1/server')
                 .then(response => {
-                    this.specData.tableHeaders = ['','벤더','부품 정보','RU','CPU 개수', '수량'];
+                    this.specData.tableHeaders = ['','벤더','부품 정보','RU','CPU 개수', '가격', '수량'];
                     this.specData.tableItems = response.data.data;
+
+                });
+        },
+        getNICData: function() {
+            this.$http.get('http://localhost:3000/v1/nic')
+                .then(response => {
+                    this.specData.tableHeaders = ['','G','타입','옵션','포트','부품 정보','가격','수량'];
+                    this.specData.tableItems = response.data.data;
+
+                    let nicData = response.data.data;
+                    for(let i=0;i<nicData.length;i++){
+                        this.nicCount.push(0);
+                        this.nicStatus.push(false);
+                        this.nicId.push(nicData[i].partnum);
+
+                    }
+                    // console.log("@@@@@@");
+                    // console.log(this.nicData);
                 });
         },
         getDiskData: function() {
@@ -295,6 +314,9 @@ export default {
                 return '';
             }
         },
+        isNICSelected(partnum, count) { // v-if="cpuId === item.partnum"
+            this.nicData.push({partnum: partnum, count: count});
+        },
         commafy(num){
             var str = num.toString().split('.');
             if (str[0].length >= 5) {
@@ -304,6 +326,21 @@ export default {
                 str[1] = str[1].replace(/(\d{3})/g, '$1 ');
             }
             return str.join('.');
+        },
+        getMemoryScore(pieces) {
+            if(pieces === 24) {
+                return 100;
+            } else if(pieces === 12) {
+                return 97;
+            } else if (pieces === 16){
+                return 68;
+            } else if (pieces === 8) {
+                return 67;
+            } else if (pieces === 4) {
+                return 35;
+            } else {
+                return 0;
+            }
         },
         categorySelected(event){
             var prevSelected = this.specData.title;
@@ -348,6 +385,7 @@ export default {
             } else if(event.currentTarget.id === 'nic'){
                 this.specData.title = 'NIC';
                 this.nicStyle = this.selectedStyle;
+                this.getNICData();
             } else if(event.currentTarget.id === 'switch'){
                 this.specData.title = 'Switch';
                 this.switchStyle = this.selectedStyle;

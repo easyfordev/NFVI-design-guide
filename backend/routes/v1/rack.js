@@ -46,7 +46,6 @@ router.post('/', function (req, res, next){
     user_req = req.body;
 
     getServiceSwitchInfo().then(function () {
-        console.log()
         return getMgmtSwitchInfo();
     }).then(function () {
         return getServerInfo();
@@ -210,11 +209,11 @@ function getStorageInfo() {
 
 function setDefaultItems() {
     return new Promise(function(resolve, reject){
-        let item1 = { name: "", type: "etc", id: 17, number: "", ru: 1};
-        item1["name"] = "T-probe";
-        item1["id"] = count++;
-        count_ru +=  1;
-        items.splice(0,0,item1);
+        // let item1 = { name: "", type: "etc", id: 17, number: "", ru: 1};
+        // item1["name"] = "T-probe";
+        // item1["id"] = count++;
+        // count_ru +=  1;
+        // items.splice(0,0,item1);
 
         let item2 = { name: "", type: "etc", id: 17, number: "", ru: 1};
         item2["name"] = "KVM";

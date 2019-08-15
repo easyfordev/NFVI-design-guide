@@ -8,7 +8,6 @@
             <!--</label>-->
             <label>
                 Workload 선택
-                <!--TODO : 제대로 다시해야 함 ...-->
                 <select style="margin-right: 10px" class="type-dropdown" v-model="workloadType">
                     <option>Signaling</option>
                     <option>User Plain</option>

@@ -5,13 +5,16 @@
             <vue-good-table
                     :columns="columns"
                     :rows="rows"
-                    max-height="900px"
+                    max-height="370px"
                     :fixed-header="true"
                     :line-numbers="true"
                     :groupOptions="{ enabled: true }"
             >
                 <div slot="table-actions-bottom">
-                    <p style="text-align: right; padding-right: 20px; font-weight: bolder">서버 1대 당 {{commafy(totalSum)}}W X {{serverCount}}대 = <span style="color: darkred">총 {{ (totalSum*serverCount).toFixed(3)}} W</span></p>
+                    <p style="text-align: right; padding-right: 20px; font-weight: bolder">
+                        서버 1대 당 {{commafy(totalSum)}}W X {{serverCount}}대  + 스위치 {{commafy(switchSum)}}W + 기타 장비 {{commafy(etcSum)}}W =
+                        <!--<span style="color: darkred; font-size: 20px">총 {{ commafy((totalSum*serverCount + switchSum  + etcSum)) }} 원</span></p>-->
+                        <span style="color: darkred; font-size: 20px">랙 단위 총 {{ (totalSum*serverCount + switchSum + etcSum).toFixed(2)}} W</span></p>
                 </div>
                 <template slot="table-header-row" slot-scope="props">
                     <span style="font-weight: bold; color: darkred;font-size: 13px">
@@ -23,7 +26,7 @@
                         <span style="font-weight: bold; color: black;font-size: 13px">{{commafy(props.row.power)}}W</span>
                     </span>
                     <span v-else-if="props.column.field == 'totalPower'">
-                        <span style="font-weight: bold; color: darkred;font-size: 12px">{{commafy((props.row.totalPower).toFixed(3))}}W</span>
+                        <span style="font-weight: bold; color: darkred;font-size: 12px">{{commafy((props.row.totalPower).toFixed(2))}}W</span>
                     </span>
                     <span v-else style="font-weight: bold; color: black;font-size: 12px">
                         {{props.formattedRow[props.column.field]}}
@@ -58,13 +61,33 @@
         methods: {
             getServerRows() {
                 let json = this.$store.state.app;
-                console.log(json);
+                // console.log(json);
                 this.$http.post('http://localhost:3000/v1/power', json)
                     .then(response => {
                         let json = response.data.rows;
                         this.rows.push(json);
                         this.totalSum = response.data.totalSum;
                         this.serverCount = this.$store.state.app.serverCount;
+
+                        let temp = {
+                            mode: "span", // span means this header will span all columns
+                            label: "스위치", // this is the label that'll be used for the header
+                            children: [
+                                { name: "Service-10G", partnum: 'CE6865-EI-B-B0B', spec: "CE6865-48S8CQ-E1 Switch",power: 382.0, count: 2, totalPower: 764.0 },
+                                { name: "MGMT-10G", partnum: 'CE8861-4C-EI-B', spec: "CE8861-4C-EI MainFrame", power: 312.0, count: 2, totalPower: 624.0 },
+                            ]
+                        };
+                        let temp2 = {
+                            mode: "span", // span means this header will span all columns
+                            label: "기타 장비", // this is the label that'll be used for the header
+                            children: [
+                                { name: "KVM/Console", partnum: "AF644A",spec: "HP LCD 8500 1U Console INTL Kit", power: 36.0, count: 1, totalPower:36.0 }
+                            ]
+                        };
+                        this.rows.push(temp);
+                        this.rows.push(temp2);
+                        this.switchSum = 764.0 + 624.0;
+                        this.etcSum = 36.0;
                     });
             },
             commafy(num){
@@ -101,6 +124,9 @@
                     // }
                 ],
                 totalSum: 0,
+                switchSum: 0,
+                etcSum: 0,
+                realSum: 0,
                 serverCount: 0
             };
         }
@@ -116,7 +142,7 @@
     /*}*/
     .t-result-section3{
         position: absolute;
-        top: 55%;
+        top: 50%;
         height: 100%;
         left: 0;
         width: 100%;

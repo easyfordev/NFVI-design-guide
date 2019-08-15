@@ -1,17 +1,19 @@
 <template>
     <div class="t-result-section2">
-        <p class="mid-title" style="position: absolute; top: 0;width: 100%;height: 2%">비용 계산기</p>
+        <p class="mid-title" style="position: absolute; top: 0;width: 100%;height: 2%; margin: 0 auto;">비용 계산기</p>
         <div class="cost-estimation">
             <vue-good-table
                     :columns="columns"
                     :rows="rows"
-                    max-height="400px"
+                    max-height="370px"
                     :fixed-header="true"
                     :line-numbers="true"
                     :groupOptions="{ enabled: true }"
             >
                 <div slot="table-actions-bottom">
-                    <p style="text-align: right; padding-right: 20px; font-weight: bolder">서버 1대 당 {{ commafy(totalSum) }} 원 X  {{serverCount}}대 =  <span style="color: darkred">총 {{ commafy((totalSum*serverCount)) }} 원</span></p>
+                    <p style="text-align: right; padding-right: 20px; font-weight: bolder">
+                        서버 1대 당 {{ commafy(totalSum) }} 원 X  {{serverCount}}대 + 스위치 {{commafy(switchSum)}}원 + 기타 장비 {{commafy(etcSum)}}원 =
+                        <span style="color: darkred; font-size: 20px">랙 단위 총 {{ commafy((totalSum*serverCount + switchSum  + etcSum)) }} 원</span></p>
                 </div>
                 <template slot="table-header-row" slot-scope="props">
                     <span style="font-weight: bold; color: darkred;font-size: 13px">
@@ -60,7 +62,7 @@ export default {
     methods: {
         getServerRows() {
             let json = this.$store.state.app;
-            console.log(json);
+            // console.log(json);
             this.$http.post('http://localhost:3000/v1/calculate', json)
                 .then(response => {
                     let json = response.data.rows;
@@ -71,8 +73,8 @@ export default {
                         mode: "span", // span means this header will span all columns
                         label: "스위치", // this is the label that'll be used for the header
                         children: [
-                            { name: "Service-10G", spec: "DCS-7050SX3-48YC12-F", count: 2, perCost: 12598000, price: 25196000  },
-                            { name: "MGMT-10G", spec: "DCS-7280TR-48C6-F", count: 2, perCost: 7402000, price: 14804000 },
+                            { name: "Service-10G", spec: "CE6865-48S8CQ-E1 Switch", count: 2, perCost: 12598000, price: 25196000  },
+                            { name: "MGMT-10G", spec: "CE8861-4C-EI MainFrame", count: 2, perCost: 7402000, price: 14804000 },
                         ]
                     };
                     let temp2 = {
@@ -86,8 +88,8 @@ export default {
                     };
                     this.rows.push(temp);
                     this.rows.push(temp2);
-
-
+                    this.switchSum = 25196000 + 14804000;
+                    this.etcSum = 624000 + 550000 + 58000;
                 });
 
         },
@@ -126,6 +128,9 @@ export default {
                 // }
             ],
             totalSum: 0,
+            switchSum: 0,
+            etcSum: 0,
+            realSum: 0,
             tempRemain: 0,
             serverCount: 0
         };

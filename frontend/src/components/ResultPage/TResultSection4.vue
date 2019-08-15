@@ -364,9 +364,9 @@ export default {
 .port-item{
     width: 45px;
     height: 35px;
-    border: 2px solid black;
+    border: 1px solid black;
     background-color: white;
-    font-size: 15px;
+    font-size: 14px;
     text-align: center;
 }
 </style>

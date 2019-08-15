@@ -3,8 +3,13 @@
         <img src="../../assets/skt5gx.png" style="position: absolute; width: 100px; height: 23px; margin-top: 10px; margin-left: 10px" @click="goToHome">
         <img src="../../assets/NFVIlogo.png" style="position: absolute; width: 110px; height: 30px; margin-top: 10px; margin-left: 110px">
 
+        <div id="menu-second" @click="goToHistory">
+            <img src="../../assets/history.png" style="width: 100px; height: 30px; position: absolute; top: 20%">
+            <img src="../../assets/history-icon.png" style="position: absolute; top:25%; right: 0; width: 25px; height: 25px"/>
+        </div>
+
         <div id="menu-last" @click="goToAdmin">
-            <img src="../../assets/admin-normal.png" style="width: 95%; height: 75%; position: absolute; top: 20%">
+            <img src="../../assets/admin-normal.png" style="width: 100px; height: 30px; position: absolute; top: 20%">
         </div>
     </div>
 </template>
@@ -21,6 +26,11 @@ export default {
         goToAdmin() {
             this.$router.push({
                 path: '/admin'
+            })
+        },
+        goToHistory() {
+            this.$router.push({
+                path: '/history'
             })
         }
     }
@@ -41,6 +51,13 @@ export default {
     position: absolute;
     right: 0;
     width: 7%;
+    height: 100%;
+    /*background-color: lightcoral;*/
+}
+#menu-second {
+    position: absolute;
+    right: 130px;
+    width: 120px;
     height: 100%;
     /*background-color: lightcoral;*/
 }

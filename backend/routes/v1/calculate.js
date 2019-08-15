@@ -44,8 +44,8 @@ router.post('/', function (req, res, next){
         return getMemoryInfo();
     }).then(function () {
         return getDiskInfo();
-    // }).then(function () {
-    //     return setDefaultItems();
+    }).then(function () {
+        return getNicInfo();
     // }).then(function () {
     //     return setBlankItems();
     }).then(function () {
@@ -58,6 +58,29 @@ router.post('/', function (req, res, next){
     });
     data = {mode: "span", label: "서버", children: []};
 });
+function getNicInfo() {
+    let promises = [];
+    for (let i = 0; i < user_req.nicId.length; i++) {
+        if(user_req.nicStatus[i] === true){
+            promises.push(new Promise(function (resolve) {
+                conn.query('SELECT * FROM nfvi.nic where partnum=?', user_req.nicId[i],
+                    function (error, result) {
+                        data["children"].push({
+                            name: "NIC " + result[0].giga + "G " + result[0].type + " " + result[0].option + " " + result[0].ports + "포트",
+                            spec: result[0].name,
+                            count: user_req.nicCount[i],
+                            perCost: result[0].price,
+                            price: user_req.nicCount[i] * result[0].price
+                        });
+                        sum += user_req.nicCount[i] * result[0].price;
+                        resolve();
+                    });
+            }));
+        }
+    }
+
+    return Promise.all(promises);
+}
 function getDiskInfo() {
     return new Promise(function(resolve, reject){
         //         { name: "DISK", spec: "HPE 1.2TB SAS 10K SFF SC DS HDD", count: 12, perCost: "417,000원", price: "5,004,000원" },
@@ -78,17 +101,6 @@ function getDiskInfo() {
                     json["price"] = user_req.diskCount * result[0].price;
                     sum += json["price"];
                     data["children"].push(json);
-
-                    // TODO : Please delete this codes
-                    data["children"].push({ name: "NIC", spec: "HPE Eth 10Gb 2p 562FLR-T Adptr", count: 1, perCost: 313000, price: 313000 });
-                    data["children"].push({ name: "NIC", spec: "HPE Eth 10Gb 2p 562T Adptr", count: 1, perCost: 333000, price: 333000 });
-                    data["children"].push({ name: "NIC", spec: "HPE Eth 10Gb 4p 563SFP + Adptr", count: 1, perCost: 448000, price: 448000 });
-                    data["children"].push({ name: "NIC", spec: "HPE Ethernet 10Gb 2-port 562SFP + Adptr", count: 1, perCost: 287000, price: 287000 });
-
-                    sum += 313000;
-                    sum += 333000;
-                    sum += 448000;
-                    sum += 287000;
 
                     resolve();
                 }

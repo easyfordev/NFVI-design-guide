@@ -83,6 +83,11 @@ export default {
         selectedType: function () {
             this.onTypeSelected(this.selectedType)
             // this.fullName = val + ' ' + this.lastName
+            console.log("Here!");
+            console.log(this.columns);
+
+            console.log(this.rows);
+
         }
     },
     created: function() {

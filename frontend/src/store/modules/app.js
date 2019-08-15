@@ -18,6 +18,9 @@ const state = {
     storageCount: 0,
     diskId: '',
     diskCount: 0,
+    nicId: [],
+    nicStatus: [],
+    nicCount: [],
 };
 
 const getters  = {
@@ -76,6 +79,15 @@ const mutations = {
     },
     diskId ( state, payload )  {
         state.diskId  = payload
+    },
+    nicId ( state, payload )  {
+        state.nicId  = payload
+    },
+    nicStatus ( state, payload )  {
+        state.nicStatus  = payload
+    },
+    nicCount ( state, payload )  {
+        state.nicCount  = payload
     },
     end () {}
 };

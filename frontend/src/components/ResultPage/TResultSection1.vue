@@ -1,11 +1,7 @@
 <template>
     <div class="t-result-section1">
-        <p id="big-title" @click="goToHome">시스템 가상화 인프라 디자인</p>
         <p class="mid-title">{{ pageTitle }}</p>
 
-        <div class="rack-item-images">
-
-        </div>
         <div class="rack-numbers">
             <div v-for="n in 41" :key="n">{{ 42 - n }}</div>
         </div>
@@ -29,9 +25,9 @@
             </draggable>
         </div>
         <img class="rack-chassis" src="../../assets/rack.png"/>
-        <button class="menu-button" style="position: absolute; left: 650px" @click="onClickMenu1">견적 산출</button>
+        <button class="menu-button" style="position: absolute; left: 600px" @click="onClickMenu1">비용/전력량</button>
         <!--<button style="position: absolute; left: 650px; top: 150px" @click="onClickMenu2">전력</button>-->
-        <button class="menu-button" style="position: absolute; left: 650px; top: 200px" @click="onClickMenu3">네트워크 구성도</button>
+        <button class="menu-button" style="position: absolute; left: 600px; top: 200px" @click="onClickMenu3">네트워크 구성도</button>
     </div>
 </template>
 
@@ -50,7 +46,42 @@ export default {
             enabled: true,
             items: [],
             dragging: false,
-            workloadName: ''
+            workloadName: '',
+            showModal: false,
+            inputKeys: [ "날짜", "담당자", "설명"],
+            userInput: { },
+            Datas: {
+                // We will make a Workbook contains 2 Worksheets
+                'animals': [
+                    {"type":"","name": "cat", "category": "animal"}
+                    ,{"name": "dog", "category": "animal"}
+                    ,{"type":"HPE 241df df fdsfSDSDV","name": "pig", "category": "animal"}
+                ],
+                'pokemons': [
+                    {"name": "pikachu", "category": "pokemon"}
+                    ,{"name": "Arbok", "category": "pokemon"}
+                    ,{"name": "Eevee", "category": "pokemon"}
+                ],
+                'costData': [
+                    // { type: "서버", name: "Server", spec: "HPE DL360 Gen10", count: 2, perCost: "1,292,000원", price: "2,584,000원" },
+                    // { name: "CPU", spec: "HPE DL360 Gen10 Xeon-G 6140", count: 4, perCost: "2,428,000원", price: "9,712,000원" },
+                    // { name: "Memory", spec: "HPE 32G 2Rx4 PC4-2666V-R Smart Kit", count: 24, perCost: "414,000원", price: "9,936,000원" },
+                    // { name: "DISK", spec: "HPE 1.2TB SAS 10K SFF SC DS HDD", count: 12, perCost: "417,000원", price: "5,004,000원" },
+                    // { name: "NIC", spec: "HPE Eth 10Gb 2p 562FLR-T Adptr", count: 2, perCost: "313,000원", price: "626,000원" },
+                    // { name: "NIC", spec: "HPE Eth 10Gb 2p 562T Adptr", count: 6, perCost: "333,000원", price: "1,998,000원" },
+                    // { type: "스위치", name: "Server", spec: "HPE DL360 Gen10", count: 2, perCost: "1,292,000원", price: "2,584,000원" },
+                    // { name: "CPU", spec: "HPE DL360 Gen10 Xeon-G 6140", count: 4, perCost: "2,428,000원", price: "9,712,000원" },
+                    // { name: "Memory", spec: "HPE 32G 2Rx4 PC4-2666V-R Smart Kit", count: 24, perCost: "414,000원", price: "9,936,000원" },
+                    // { name: "DISK", spec: "HPE 1.2TB SAS 10K SFF SC DS HDD", count: 12, perCost: "417,000원", price: "5,004,000원" },
+                    // { name: "NIC", spec: "HPE Eth 10Gb 2p 562FLR-T Adptr", count: 2, perCost: "313,000원", price: "626,000원" },
+                    // { name: "NIC", spec: "HPE Eth 10Gb 2p 562T Adptr", count: 6, perCost: "333,000원", price: "1,998,000원" },
+                ],
+                // 'powerData': [
+                //     {"type":"","name": "cat", "category": "animal"}
+                //     ,{"name": "dog", "category": "animal"}
+                //     ,{"type":"HPE 241df df fdsfSDSDV","name": "pig", "category": "animal"}
+                // ],
+            }
         }
     },
     created: function() {
@@ -58,9 +89,11 @@ export default {
 
         this.getItemList();
         this.workloadName = this.$store.state.app.workloadName;
+        // this.getExcelData();
         // console.log(">>>" + this.$store.state.app.mgmtSwitchCount);
         // console.log(">>>" + this.$store.state.app.storageCount);
         // console.log(">>>" + this.$store.state.app.serviceSwitchCount);
+
 
     },
     computed: {
@@ -74,9 +107,8 @@ export default {
             // console.log(json);
             this.$http.post('http://localhost:3000/v1/rack', json)
                 .then(response => {
-                    console.log(response.data.items);
+                    // console.log(response.data.items);
                     this.items = response.data.items;
-
                 });
         },
         onMouseEnter() {
@@ -207,9 +239,6 @@ export default {
     border: 1px solid rgba(0,0,0,.125);
     text-align: center;
     width: 200px;
-}
-.rack-item-images{
-    background-color: lightpink;
 }
 .rack-chassis{
     margin-left: 92px;

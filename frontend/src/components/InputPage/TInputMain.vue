@@ -34,10 +34,7 @@ export default {
             // this.$store.commit('app/storageId', 'storage-1234');
 
             let json = this.$store.state.app;
-            this.$http.post('http://localhost:3000/v1/calculate',json)
-                .then(response => {
-                    response.data
-                });
+            this.$http.post('http://localhost:3000/v1/calculate',json);
         }
     }
 }
